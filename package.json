@@ -1,0 +1,128 @@
+{
+  "name": "uix-create-taro-app",
+  "version": "0.0.1",
+  "description": "A scaffold for creating Taro application.",
+  "main": "src/app.tsx",
+  "directories": {
+    "test": "test"
+  },
+  "templateInfo": {
+    "name": "mobx",
+    "typescript": true,
+    "css": "sass"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+      "^@/(.*)": "<rootDir>/src/$1"
+    },
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest",
+      "^.+\\.(ts|tsx)?$": "ts-jest"
+    }
+  },
+  "scripts": {
+    "test": "cross-env NODE_ENV=test jest",
+    "build:weapp": "taro build --type weapp",
+    "build:swan": "taro build --type swan",
+    "build:alipay": "taro build --type alipay",
+    "build:tt": "taro build --type tt",
+    "build:h5": "taro build --type h5",
+    "build:rn": "taro build --type rn",
+    "build:qq": "taro build --type qq",
+    "build:quickapp": "taro build --type quickapp",
+    "dev:weapp": "npm run build:weapp -- --watch",
+    "dev:swan": "npm run build:swan -- --watch",
+    "dev:alipay": "npm run build:alipay -- --watch",
+    "dev:tt": "npm run build:tt -- --watch",
+    "dev:h5": "npm run build:h5 -- --watch",
+    "dev:rn": "npm run build:rn -- --watch",
+    "dev:qq": "npm run build:qq -- --watch",
+    "dev:quickapp": "npm run build:quickapp -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "uix-create-taro-app"
+  },
+  "keywords": [
+    "react",
+    "typescript",
+    "taro",
+    "scaffold"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xizon/uix-create-taro-app/issues"
+  },
+  "homepage": "https://github.com/xizon/uix-create-taro-app#readme",
+  "devDependencies": {
+    "@babel/core": "^7.17.3",
+    "@tarojs/mini-runner": "^3.4.1",
+    "@tarojs/webpack-runner": "^3.4.1",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@types/jest": "^27.0.3",
+    "@types/react": "^17.0.39",
+    "@types/webpack-env": "^1.16.3",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-preset-taro": "^3.4.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.32.0",
+    "eslint-config-taro": "^3.4.1",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.0.4",
+    "jsdom": "^18.1.1",
+    "stylelint": "^14.5.0",
+    "ts-jest": "^27.0.4",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.5.5"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "parser": "@typescript-eslint/parser",
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "extends": [
+      "plugin:react/recommended",
+      "plugin:@typescript-eslint/recommended",
+      "taro/react"
+    ],
+    "rules": {
+      "react/jsx-uses-react": "off",
+      "react/react-in-jsx-scope": "off"
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.17.2",
+    "@tarojs/components": "^3.4.1",
+    "@tarojs/plugin-framework-react": "^3.4.1",
+    "@tarojs/react": "^3.4.1",
+    "@tarojs/runtime": "^3.4.1",
+    "@tarojs/taro": "^3.4.1",
+    "mobx": "^6.3.13",
+    "mobx-react": "^7.2.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "browserslist": [
+    "last 3 versions",
+    "Android >= 4.1",
+    "ios >= 8"
+  ],
+  "author": "UIUX Lab"
+}
