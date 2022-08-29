@@ -1,6 +1,6 @@
-# uix-create-taro-app
+# Full-Stack Taro Application Template
   
-A scaffold for creating Taro application (Extended version, supports unit testing).
+ This repository is a full-stack sample mini program based on Taro that creates a simple extended architecture(eg. unit testing), and provides the foundational services, components, and plumbing needed to get a basic application up and running. 
 
 [English Documentation](README.md) | [中文版说明文档](README_CN.md)
 
@@ -8,7 +8,7 @@ A scaffold for creating Taro application (Extended version, supports unit testin
 ## File Structures
 
 ```sh
-uix-create-taro-app/
+fullstack-taro-app-template/
 ├── README.md
 ├── LICENSE
 ├── project.config.json        # Mini Program Project Configuration
@@ -44,14 +44,14 @@ uix-create-taro-app/
 **Step 1.** Clone the repo to get all source files including build scripts: 
 
 ```sh
-$ git clone git://github.com/xizon/uix-create-taro-app.git
+$ git clone git://github.com/xizon/fullstack-taro-app-template.git
 ```
 
 
-**Step 2.** First, using an absolute path into your `"uix-create-taro-app/"` folder directory.
+**Step 2.** First, using an absolute path into your `"fullstack-taro-app-template/"` folder directory.
 
 ```sh
-$ cd /{your_directory}/uix-create-taro-app
+$ cd /{your_directory}/fullstack-taro-app-template
 ```
 
 

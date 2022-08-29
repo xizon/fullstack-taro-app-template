@@ -1,7 +1,7 @@
 {
-  "name": "uix-create-taro-app",
+  "name": "fullstack-taro-app-template",
   "version": "0.0.1",
-  "description": "A scaffold for creating Taro application.",
+  "description": "This repository is a full-stack sample mini program based on Taro that creates a simple extended architecture.",
   "main": "src/app.tsx",
   "directories": {
     "test": "test"
@@ -43,19 +43,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "uix-create-taro-app"
+    "url": "fullstack-taro-app-template"
   },
   "keywords": [
     "react",
     "typescript",
     "taro",
-    "scaffold"
+    "scaffold",
+    "template",
+    "min-program",
+    "miniprogram"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xizon/uix-create-taro-app/issues"
+    "url": "https://github.com/xizon/fullstack-taro-app-template/issues"
   },
-  "homepage": "https://github.com/xizon/uix-create-taro-app#readme",
+  "homepage": "https://github.com/xizon/fullstack-taro-app-template#readme",
   "devDependencies": {
     "@babel/core": "^7.17.3",
     "@tarojs/mini-runner": "^3.4.1",

@@ -1,6 +1,6 @@
 {
   "miniprogramRoot": "./dist",
-  "projectname": "uix-create-taro-app",
+  "projectname": "fullstack-taro-app-template",
   "description": "The app description.",
   "appid": "touristappid",
   "setting": {

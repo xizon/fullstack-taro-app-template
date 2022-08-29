@@ -1,6 +1,7 @@
-# uix-create-taro-app
+# Full-Stack Taro Application Template
   
-创建Taro应用的脚手架(扩展版,支持单元测试)
+这个存储库是一个基于Taro构建的全栈小程序示例模板，它创建了一个简单的扩展架构（例如单元测试），并提供了启动和运行基本应用程序所需的基础服务、组件和管道。
+
 
 [English Documentation](README.md) | [中文版说明文档](README_CN.md)
 
@@ -8,7 +9,7 @@
 ## 目录结构
 
 ```sh
-uix-create-taro-app/
+fullstack-taro-app-template/
 ├── README.md
 ├── LICENSE
 ├── project.config.json        # 小程序项目配置
@@ -45,14 +46,14 @@ uix-create-taro-app/
 **Step 1.** 克隆项目
 
 ```sh
-$ git clone git://github.com/xizon/uix-create-taro-app.git
+$ git clone git://github.com/xizon/fullstack-taro-app-template.git
 ```
 
 
-**Step 2.** 进入您所在设备的 `"uix-create-taro-app/"` 目录.
+**Step 2.** 进入您所在设备的 `"fullstack-taro-app-template/"` 目录.
 
 ```sh
-$ cd /{your_directory}/uix-create-taro-app
+$ cd /{your_directory}/fullstack-taro-app-template
 ```
 
 

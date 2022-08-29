@@ -4,7 +4,7 @@
 const path = require('path');
 
 const config = {
-  projectName: 'uix-create-taro-app',
+  projectName: 'fullstack-taro-app-template',
   date: '2022-2-15',
   designWidth: 750,
   deviceRatio: {
