@@ -1,34 +1,26 @@
-import React, { Component } from 'react';
-import { Provider } from 'mobx-react';
-
-import counterStore from './store/counter';
-
+import React, { Component, PropsWithChildren } from 'react';
+import { Provider } from 'react-redux';
 import '@/app.scss';
 
-const store: any = {
-  counterStore
+import configureStore from '@/status/store/createStore';
+const store = configureStore();
+
+class App extends Component<PropsWithChildren> {
+
+    componentDidMount() { }
+
+    componentDidShow() { }
+
+    componentDidHide() { }
+
+    render() {
+        // this.props.children 是将要会渲染的页面
+        return (
+            <Provider store={store}>
+                { this.props.children }
+            </Provider>
+          )
+    }
 }
 
-
-
-class App extends Component {
-  componentDidMount () {}
-
-  componentDidShow () {}
-
-  componentDidHide () {}
-
-  componentDidCatchError () {}
-  
-  // this.props.children is the page to render
-  render () {
-    return (
-      <Provider store={store}>
-        {this.props.children}
-      </Provider>
-    )
-  }
-
-}
-
-export default App;
+export default App

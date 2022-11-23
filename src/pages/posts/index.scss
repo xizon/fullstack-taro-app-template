@@ -1,0 +1,25 @@
+
+.item {
+    width: 45%;
+    display: inline-block;
+    border: 0.025rem solid #d7d7d7;
+    padding: 0.25rem;
+    font-size: 0.35rem;
+    background: #ffffff;
+    border-radius: 0.1rem;
+
+    // 请勿直接使用 <img> 标签，它可能会与小程序不兼容
+    .img {
+        width: 100px;
+        height: 50px;
+    }
+
+    &:nth-child(even) {
+        margin-left: -0.025rem;
+    }
+}
+
+.scrollview {
+    height: 90vh;
+    text-align: center;
+}

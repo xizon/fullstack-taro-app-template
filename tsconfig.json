@@ -27,7 +27,11 @@
     "baseUrl": "./src",
     "jsx": "react",
     "paths": {
-      "@/components/*": ["*"]
+      "@/*": ["*"],
+      "@/config/*": ["config/*"],
+      "@/components/*": ["components/*"],
+      "@/status/*": ["status/*"],
+      "@/utils/*": ["utils/*"]
     },
     "typeRoots": [
       "node_modules/@types"

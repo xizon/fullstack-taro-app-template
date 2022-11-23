@@ -1,9 +1,17 @@
 # Full-Stack Taro Application Template
   
-这个存储库是一个基于Taro构建的全栈小程序示例模板，它创建了一个简单的扩展架构（例如单元测试），并提供了启动和运行基本应用程序所需的基础服务、组件和管道。
+这个存储库是一个基于Taro构建的全栈小程序示例模板，它创建了一个简单的扩展架构(跨组件状态管理, 异步请求等)，并提供了启动和运行基本应用程序所需的基础服务、组件和管道。
 
 
 [English Documentation](README.md) | [中文版说明文档](README_CN.md)
+
+
+## 预览图
+
+<img src="screenshots/home.png" width="250px">
+<img src="screenshots/posts.png" width="250px">
+<img src="screenshots/counter.png" width="250px">
+<img src="screenshots/dashboard.png" width="250px">
 
 
 ## 目录结构
@@ -16,10 +24,8 @@ fullstack-taro-app-template/
 ├── project.tt.json
 ├── babel.config.js
 ├── tsconfig.json
-├── global.d.ts
 ├── package-lock.json
 ├── package.json                # Node.js manifest
-├── test/                       # 单元测试目录
 ├── dist/                       # 打包目录
 ├── config                      # 编译配置目录
 │   ├── dev.js                  # 开发模式配置
@@ -31,10 +37,16 @@ fullstack-taro-app-template/
 │   ├── app.tsx                 # 入口组件
 │   ├── index.html              # H5 入口 HTML
 │   └── pages                   # 页面组件
-│       └── index
-│           ├── index.config.ts # 页面配置
-│           ├── index.scss      # 页面 CSS
-│           └── index.jsx       # 页面组件，如果是 Vue 项目，此文件为 index.vue
+│   │   └── index
+│   │       ├── index.config.ts # 页面配置
+│   │       ├── index.scss      # 页面 CSS
+│   │       └── index.jsx       # 页面组件，如果是 Vue 项目，此文件为 index.vue
+│   │
+│   ├── status/                 # 使用 Redux 来管理跨组件状态的目录
+│   ├── assets/
+│   ├── config/
+│   ├── components/    
+│   └── ...
 └──
 ```
 
@@ -101,58 +113,149 @@ $ cd /{your_directory}
 $ sudo taro init
 ```
 
-**🍗 如果使用自己配置的脚手架，需要进行如下操作:**
+## 其它常见问题
 
-**Step 1.**  安装Taro的开发依赖
 
-开发所需的 Taro（包含 `react`、`typescript`、`sass`、`mobx`）依赖项。
+### ⚙️ 使用别名或者其他，修改以下文件:
 
+首先需要安装一个依赖:
 
 ```sh
-# 删除旧的可能有冲突或不必要的包:
-$ npm uninstall webpack webpack-cli @babel/plugin-proposal-class-properties @babel/plugin-transform-runtime @babel/polyfill @babel/preset-env @babel/preset-react @babel/preset-typescript css-minimizer-webpack-plugin mini-css-extract-plugin moment node-sass babel-loader css-loader raw-loader style-loader glslify-loader json-loader sass-loader react-test-renderer terser-webpack-plugin
+$ npm i babel-plugin-module-resolver
+```
+
+接着修改下面的配置文件: 
+
+config/index.js 
+
+```json
+    alias: {
+        '@': path.resolve(__dirname, '..', 'src'),
+        '@/config': path.resolve(__dirname, '..', 'src/config'),
+        '@/components': path.resolve(__dirname, '..', 'src/components'),
+        '@/status': path.resolve(__dirname, '..', 'src/status'),
+        '@/utils': path.resolve(__dirname, '..', 'src/utils')
+
+    },
 ```
 
 
-```sh
-$ npm install @babel/runtime @tarojs/runtime @tarojs/taro @tarojs/components @tarojs/plugin-framework-react @tarojs/react mobx mobx-react react react-dom --save
+package.json
+
+```json
+  "jest": {
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+      "^@/(.*)": "<rootDir>/src/$1",
+      "^@/config/(.*)": "<rootDir>/src/config/$1",
+      "^@/components/(.*)": "<rootDir>/src/components/$1",
+      "^@/status/(.*)": "<rootDir>/src/status/$1",
+      "^@/utils/(.*)": "<rootDir>/src/utils/$1"
+    },
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest",
+      "^.+\\.(ts|tsx)?$": "ts-jest"
+    }
+  },
 ```
 
+默认没有安装 **Jest**，如果需要，请执行下面的代码：
+
 ```sh
-$ npm install @types/webpack-env @types/react @tarojs/mini-runner @tarojs/webpack-runner @babel/core babel-preset-taro eslint eslint-config-taro eslint-plugin-react eslint-plugin-import eslint-plugin-react-hooks stylelint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin --save-dev
+$ npm i @testing-library/jest-dom @types/jest jest ts-jest --save-dev
 ```
 
 
-**Step 2.**  复制模板生成的文件:
+tsconfig.json
 
-- project.config.json
-- project.tt.json
-- global.d.ts
-- config/*
+```json
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"],
+      "@/config/*": ["config/*"],
+      "@/components/*": ["components/*"],
+      "@/status/*": ["status/*"],
+      "@/utils/*": ["utils/*"]
+    },
+```
 
 
-**Step 3.**  参考官方生成的taro模板修改自己的配置文件:
 
 
-- package.json (from `.eslintrc.js` and `package.json`)
-- tsconfig.json (from `tsconfig.jsonn`)
-- babel.config.js (from `babel.config.js`)
+babel.config.js 
+
+```json
+    "plugins": [
+        ["module-resolver", {
+            "root": ["./src"],
+            "alias": {
+                "@/": "./src",
+                "@/config": "./src/config",
+                "@/components": "./src/components",
+                "@/status": "./src/status",
+                "@/utils": "./src/utils"
+            }
+        }]
+
+    ]
+```
+
+
+
+
+
+
+### ❌ 报错: `[object Object] is not a PostCSS plugin Error: pages/index/index.wxss from Css Minimizer plugin`
+
+解决方案：
+
+```sh
+$ npm i postcss --save-dev
+```
+
+### ❌ 报错: `Uncaught ReferenceError: $RefreshReg$ is not defined`
+
+解决方案：
+
+禁用快速刷新,修改配置文件 `config/index.js` 和 `babel.config.js`。
+
+
+config/index.js
+
+```js
+  h5: {
+    devServer: {
+      hot: false 
+    }
+  }
+```
+
+
+babel.config.js
+
+```js
+  presets: [
+    ['taro', {
+      framework: 'react',
+      hot: false
+    }]
+  ]
+```
 
 
 
 ## 感谢
 
 - [React](https://reactjs.org/)
-- [Mobx](https://mobx.js.org/)
 - [Taro](https://taro.zone//)
+- [redux](https://redux.js.org/)
 
 
 ## 支持的开发环境
 
-- Taro 3 +
-- React 17 +
-- TypeScript 4.x.x + 
-- Jest 27.x.x
+- Taro 3.5.* +
+- React 18 +
 
 
 ## 许可证

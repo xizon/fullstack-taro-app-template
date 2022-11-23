@@ -1,13 +1,9 @@
 {
   "miniprogramRoot": "./",
   "projectname": "fullstack-taro-app-template",
-  "description": "The app description.",
-  "appid": "touristappid",
+  "appid": "testAppId",
   "setting": {
-    "urlCheck": true,
     "es6": false,
-    "postcss": false,
     "minified": false
-  },
-  "compileType": "miniprogram"
+  }
 }

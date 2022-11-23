@@ -1,11 +1,35 @@
 
+
+// 0.025rem 相当于1个像素
+
 body {
     margin: 0;
     padding: 0;
-
-    .taro_page {
-        background-color: #ddd !important;
-    }
-    
 }
 
+.wrapper {
+    background-color: #f3f3f3;
+    color: #333;
+    min-height: 100vh;
+}
+
+.page-small {
+    font-size: 30px;
+}
+
+.page-title {
+    font-size: 50px;
+    font-weight: bold;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.page-desc {
+    display: block;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.btn-max-w {
+    margin-bottom: 15px;
+}
