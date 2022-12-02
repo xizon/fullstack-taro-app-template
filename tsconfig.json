@@ -31,7 +31,8 @@
       "@/config/*": ["config/*"],
       "@/components/*": ["components/*"],
       "@/status/*": ["status/*"],
-      "@/utils/*": ["utils/*"]
+      "@/utils/*": ["utils/*"],
+      "@/assets/*": ["assets/*"]
     },
     "typeRoots": [
       "node_modules/@types"

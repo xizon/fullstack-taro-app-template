@@ -1,6 +1,6 @@
 {
   "name": "fullstack-taro-app-template",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This repository is a full-stack sample mini program based on Taro that creates a simple extended architecture.",
   "templateInfo": {
     "name": "default",
@@ -15,7 +15,8 @@
       "^@/config/(.*)": "<rootDir>/src/config/$1",
       "^@/components/(.*)": "<rootDir>/src/components/$1",
       "^@/status/(.*)": "<rootDir>/src/status/$1",
-      "^@/utils/(.*)": "<rootDir>/src/utils/$1"
+      "^@/utils/(.*)": "<rootDir>/src/utils/$1",
+      "^@/assets/(.*)": "<rootDir>/src/assets/$1"
     },
     "transform": {
       "^.+\\.(js|jsx)$": "babel-jest",

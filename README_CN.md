@@ -134,7 +134,8 @@ config/index.js
         '@/config': path.resolve(__dirname, '..', 'src/config'),
         '@/components': path.resolve(__dirname, '..', 'src/components'),
         '@/status': path.resolve(__dirname, '..', 'src/status'),
-        '@/utils': path.resolve(__dirname, '..', 'src/utils')
+        '@/utils': path.resolve(__dirname, '..', 'src/utils'),
+        '@/assets': path.resolve(__dirname, '..', 'src/assets')
 
     },
 ```
@@ -151,7 +152,8 @@ package.json
       "^@/config/(.*)": "<rootDir>/src/config/$1",
       "^@/components/(.*)": "<rootDir>/src/components/$1",
       "^@/status/(.*)": "<rootDir>/src/status/$1",
-      "^@/utils/(.*)": "<rootDir>/src/utils/$1"
+      "^@/utils/(.*)": "<rootDir>/src/utils/$1",
+      "^@/assets/(.*)": "<rootDir>/src/assets/$1"
     },
     "transform": {
       "^.+\\.(js|jsx)$": "babel-jest",
@@ -176,7 +178,8 @@ tsconfig.json
       "@/config/*": ["config/*"],
       "@/components/*": ["components/*"],
       "@/status/*": ["status/*"],
-      "@/utils/*": ["utils/*"]
+      "@/utils/*": ["utils/*"],
+      "@/assets/*": ["assets/*"]
     },
 ```
 
@@ -194,7 +197,8 @@ babel.config.js
                 "@/config": "./src/config",
                 "@/components": "./src/components",
                 "@/status": "./src/status",
-                "@/utils": "./src/utils"
+                "@/utils": "./src/utils",
+                "@/assets": "./src/assets"
             }
         }]
 
@@ -243,6 +247,9 @@ babel.config.js
   ]
 ```
 
+## 更新日志
+
+[releases](CHANGELOG.md)
 
 
 ## 感谢

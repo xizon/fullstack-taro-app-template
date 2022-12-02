@@ -17,7 +17,8 @@ module.exports = {
                 "@/config": "./src/config",
                 "@/components": "./src/components",
                 "@/status": "./src/status",
-                "@/utils": "./src/utils"
+                "@/utils": "./src/utils",
+                "@/assets": "./src/assets"
             }
         }]
 
