@@ -1,6 +1,6 @@
 {
   "name": "fullstack-taro-app-template",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "This repository is a full-stack sample mini program based on Taro that creates a simple extended architecture.",
   "templateInfo": {
     "name": "default",

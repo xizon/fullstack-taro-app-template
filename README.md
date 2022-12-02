@@ -5,13 +5,33 @@
 [English Documentation](README.md) | [中文版说明文档](README_CN.md)
 
 
+## Scheme
+
+List my progress here:
+
+| Function Block |  Supports  |
+| --- | --- |
+| Navigation | ✔ |
+| Parameter Acquisition | ✔ |
+| Authorization | ✔ |
+| Login | ✔ |
+| Register | ✔ |
+| State Management | ✔ |
+| Network Requests | ✔ |
+| Upload | ✔ |
+| File System(for image) | ✔ |
+| Link Jump | ✔ |
+
 
 ## Screenshots
 
 <img src="screenshots/home.png" width="250px">
 <img src="screenshots/posts.png" width="250px">
+<img src="screenshots/post-detail.png" width="250px">
 <img src="screenshots/counter.png" width="250px">
 <img src="screenshots/dashboard.png" width="250px">
+<img src="screenshots/upload.png" width="250px">
+
 
 
 
@@ -127,7 +147,7 @@ Then:
 
 config/index.js 
 
-```json
+```js
     alias: {
         '@': path.resolve(__dirname, '..', 'src'),
         '@/config': path.resolve(__dirname, '..', 'src/config'),
@@ -187,7 +207,7 @@ tsconfig.json
 
 babel.config.js 
 
-```json
+```js
     "plugins": [
         ["module-resolver", {
             "root": ["./src"],

@@ -1,8 +1,10 @@
 # Changelog
 
-#### = 1.0.1 (December 2, 2022) =
+#### = 1.0.2 (December 3, 2022) =
 
 * new: Add authorization demo for obtaining personal information.
+* new: Add upload demo.
+* tweak: Other minor optimizations.
 
 
 #### = 1.0.0 (November 22, 2022) =

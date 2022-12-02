@@ -6,12 +6,34 @@
 [English Documentation](README.md) | [中文版说明文档](README_CN.md)
 
 
+## 提供方案
+
+这里列出完成的的进度:
+
+| 功能块 | 支持 |
+| --- | --- |
+| 导航 | ✔ |
+| 参数获取 | ✔ |
+| 授权 | ✔ |
+| 登录 | ✔ |
+| 注册 | ✔ |
+| 状态管理 | ✔ |
+| 网络请求 | ✔ |
+| 上传 | ✔ |
+| 文件系统（针对图片） | ✔ |
+| 链接跳转 | ✔ |
+
+
+
 ## 预览图
 
 <img src="screenshots/home.png" width="250px">
 <img src="screenshots/posts.png" width="250px">
+<img src="screenshots/post-detail.png" width="250px">
 <img src="screenshots/counter.png" width="250px">
 <img src="screenshots/dashboard.png" width="250px">
+<img src="screenshots/upload.png" width="250px">
+
 
 
 ## 目录结构
@@ -128,7 +150,7 @@ $ npm i babel-plugin-module-resolver
 
 config/index.js 
 
-```json
+```js
     alias: {
         '@': path.resolve(__dirname, '..', 'src'),
         '@/config': path.resolve(__dirname, '..', 'src/config'),
@@ -188,7 +210,7 @@ tsconfig.json
 
 babel.config.js 
 
-```json
+```js
     "plugins": [
         ["module-resolver", {
             "root": ["./src"],

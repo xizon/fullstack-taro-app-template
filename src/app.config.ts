@@ -5,7 +5,9 @@ export default defineAppConfig({
         'pages/posts/index',
         'pages/post-detail/index',
         'pages/counter/index',
-        'pages/dashboard/index'
+        'pages/dashboard/index',
+        'pages/upload/index'
+        
     ],
     window: {
         backgroundTextStyle: 'light',
@@ -43,6 +45,12 @@ export default defineAppConfig({
                 text: "我的",
                 iconPath: "./assets/images/icon3.png",
                 selectedIconPath: "./assets/images/icon3-active.png"
+            },
+            {
+                pagePath: "pages/upload/index",
+                text: "上传",
+                iconPath: "./assets/images/icon5.png",
+                selectedIconPath: "./assets/images/icon5-active.png"
             }  
         ]
     }
