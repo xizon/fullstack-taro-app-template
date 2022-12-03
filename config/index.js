@@ -31,7 +31,7 @@ const config = {
         '@/assets': path.resolve(__dirname, '..', 'src/assets')
 
     },
-    plugins: [],
+    plugins: [ '@tarojs/plugin-html' ],
     defineConstants: {
     },
     copy: {

@@ -1,6 +1,5 @@
 import React, { Component, PropsWithChildren } from 'react';
 import Taro from '@tarojs/taro';
-import { View, Text, Image } from '@tarojs/components';
 import Button from '@/components/Buttons';
 import './index.scss';
 import apiUrls from '@/config/apiUrls';
@@ -85,25 +84,25 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
     render() {
         return (
-            <View className="wrapper">
+            <div className="wrapper">
 
-                <View className="page-title"></View>
-                <View className="detail">
+                <div className="page-title"></div>
+                <div className="detail">
 
                    {
-                        this.state.loading ? <View>Loading...</View> : this.state.detail ? (
-                            <View>
-                                <View className="page-title">{this.state.detail.name}</View>
-                                <View><Image src={this.state.detail.flag}></Image></View>
-                                <Text>{this.state.detail.name}  - (region: {this.state.detail.region})</Text>
-                                <View><Button className='btn-max-w' plain type='primary' btnName='返回上一页' href={`${this.prevPagePathAbsolutePath}`} /></View>
-                                <Text className="page-small">(注：小程序不能直接跳转到底部菜单栏)</Text>
-                            </View>
+                        this.state.loading ? <div>Loading...</div> : this.state.detail ? (
+                            <div>
+                                <div className="page-title">{this.state.detail.name}</div>
+                                <div><img className="detail-img" src={this.state.detail.flag} /></div>
+                                <p>{this.state.detail.name}  - (region: {this.state.detail.region})</p>
+                                <div><Button className='btn-max-w' plain type='primary' btnName='返回上一页' href={`${this.prevPagePathAbsolutePath}`} /></div>
+                                <p className="page-small">(注：小程序不能直接跳转到底部菜单栏)</p>
+                            </div>
                         ) : null
                     }    
-                </View>
+                </div>
 
-            </View>
+            </div>
         )
     }
 }

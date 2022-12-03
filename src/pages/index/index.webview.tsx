@@ -1,5 +1,5 @@
 import React, { Component, PropsWithChildren } from 'react';
-import { View, WebView } from '@tarojs/components';
+import { WebView } from '@tarojs/components';
 import './index.scss';
 
 
@@ -36,13 +36,13 @@ export default class Index extends Component<PropsWithChildren> {
 
     render() {
         return (
-            <View className="webview">
+            <div className="webview">
                 <WebView src={`https://yourwebsite.com`}
                     onMessage={this.handleMessage}
                     onLoad={this.handleLoad}
                     onError={this.handleError}
                 />
-            </View>
+            </div>
         )
     }
 }

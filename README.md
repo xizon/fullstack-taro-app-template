@@ -5,6 +5,8 @@
 [English Documentation](README.md) | [中文版说明文档](README_CN.md)
 
 
+<img src="screenshots/demo.gif" width="300px">
+
 ## Scheme
 
 List my progress here:
@@ -19,18 +21,12 @@ List my progress here:
 | State Management | ✔ |
 | Network Requests | ✔ |
 | Upload | ✔ |
-| File System(for image) | ✔ |
+| File System (for image) | ✔ |
 | Link Jump | ✔ |
-
-
-## Screenshots
-
-<img src="screenshots/home.png" width="250px">
-<img src="screenshots/posts.png" width="250px">
-<img src="screenshots/post-detail.png" width="250px">
-<img src="screenshots/counter.png" width="250px">
-<img src="screenshots/dashboard.png" width="250px">
-<img src="screenshots/upload.png" width="250px">
+| Scroll Trigger | ✔ |
+| Canvas | ✔ |
+| HTML5 Tags | ✔ |
+| DragDrop (for uploaded image) | ✔ |
 
 
 

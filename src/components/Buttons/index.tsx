@@ -4,7 +4,7 @@
  *************************************
  */
 import React from 'react';
-import { View, Button } from '@tarojs/components';
+import { Button } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 
 /*-- Apply this component styles --*/
@@ -33,7 +33,7 @@ export default function CustomButton(props: ButtonProps) {
 
 
     return (
-        <View>
+        <div>
 
             {href ? (
                 <Button onClick={(e) => navigateTo(e, href)} {...attributes}>
@@ -45,7 +45,7 @@ export default function CustomButton(props: ButtonProps) {
                 </Button>
             )}
 
-        </View>
+        </div>
     )
 
 }

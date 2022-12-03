@@ -6,8 +6,8 @@ export default defineAppConfig({
         'pages/post-detail/index',
         'pages/counter/index',
         'pages/dashboard/index',
-        'pages/upload/index'
-        
+        'pages/upload/index',
+        'pages/canvas/index'
     ],
     window: {
         backgroundTextStyle: 'light',
@@ -47,11 +47,11 @@ export default defineAppConfig({
                 selectedIconPath: "./assets/images/icon3-active.png"
             },
             {
-                pagePath: "pages/upload/index",
-                text: "上传",
-                iconPath: "./assets/images/icon5.png",
-                selectedIconPath: "./assets/images/icon5-active.png"
-            }  
+                pagePath: "pages/canvas/index",
+                text: "Canvas",
+                iconPath: "./assets/images/icon6.png",
+                selectedIconPath: "./assets/images/icon6-active.png"
+            }
         ]
     }
 })

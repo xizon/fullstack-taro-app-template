@@ -1,6 +1,6 @@
 import React, { Component, PropsWithChildren } from 'react';
 import Taro from '@tarojs/taro';
-import { View, Text, Image, ScrollView } from '@tarojs/components';
+import { ScrollView } from '@tarojs/components';
 import apiUrls from '@/config/apiUrls';
 
 import './index.scss';
@@ -91,9 +91,9 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
     render() {
         return (
-            <View className="wrapper">
+            <div className="wrapper">
 
-                <View className="page-title">文章列表</View>
+                <div className="page-title">文章列表</div>
 
                 <ScrollView className="scrollview"
                     scrollY
@@ -106,19 +106,19 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 >
 
                     {
-                        this.state.loading ? <View>Loading...</View> : this.state.list ? this.state.list.map((post, key) => {
+                        this.state.loading ? <div>Loading...</div> : this.state.list ? this.state.list.map((post, key) => {
                             return (
-                                <View className="item" key={key} onClick={(e) => this.linkTo(e, '/pages/post-detail/index?name=' + post.name)}>
-                                    <View><Image className="img" src={post.flag}></Image></View>
-                                    <Text>{post.name}  - (region: {post.region})</Text>
-                                </View>
+                                <div className="item" key={key} onClick={(e) => this.linkTo(e, '/pages/post-detail/index?name=' + post.name)}>
+                                    <div><img className="img" src={post.flag} /></div>
+                                    <p>{post.name}  - (region: {post.region})</p>
+                                </div>
                             )
                         }) : null
                     }
                 </ScrollView>
 
 
-            </View>
+            </div>
         )
     }
 }

@@ -1,5 +1,19 @@
 
 .upload {
     padding: 10px;
+
+    .preview {
+        position: relative;
+        width: calc(100vw - 2.5rem);
+        height: 50vh;
+        border: 3px solid #333;
+        overflow: hidden;
+
+        .dragdrop-obj {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+        }
+    }
 }
 

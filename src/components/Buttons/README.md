@@ -23,15 +23,14 @@ It accepts all props(include data-* attributes) which native buttons support.
 
 ```js
 import React from 'react';
-import { View } from '@tarojs/components';
-import Button from '@/components/Buttons';
+import CustomButton from '@/components/Buttons';
 
 
 export default () => {
   return (
-    <View>
-		<Button className='btn-max-w' plain type='primary' btnName='Posts' href={`/pages/posts/index`} />
-    </View>
+    <div>
+		<CustomButton className='btn-max-w' plain type='primary' btnName='Posts' href={`/pages/posts/index`} />
+    </div>
   );
 }
 

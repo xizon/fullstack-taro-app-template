@@ -1,22 +1,39 @@
 import React, { Component, PropsWithChildren } from 'react';
 import Taro from '@tarojs/taro';
-import { View, Button, Image } from '@tarojs/components';
+import { Button } from '@tarojs/components';
 
 import './index.scss';
 
 type PageState = {
     imageInfo?: any | null;
+    imageTouchPosLeft?: any | null;
+    imageTouchPosTop?: any | null;
+
 };
 
 export default class Index extends Component<PropsWithChildren, PageState> {
 
+    __touchEnd: boolean;
+    __touchPos: object;
+
     constructor(props) {
         super(props);
         this.state = {
-            imageInfo: null
+            imageInfo: null,
+            imageTouchPosLeft: 0,
+            imageTouchPosTop: 0
         }
 
-        this.uploadImage = this.uploadImage.bind( this );
+        this.__touchEnd = false;
+        this.__touchPos = {};
+
+        this.uploadImage = this.uploadImage.bind(this);
+        this.imgTouchStart = this.imgTouchStart.bind(this);
+        this.imgTouchMove = this.imgTouchMove.bind(this);
+        this.imgTouchEnd = this.imgTouchEnd.bind(this);
+
+
+
 
     }
 
@@ -30,14 +47,20 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 console.log(res);
                 // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
                 let tempFilePaths = res.tempFilePaths;
-       
+
                 //图片地址
                 let imagePath = tempFilePaths[0];
 
                 //图片转base64
                 self.imgConvertBase64(imagePath).then(res => {
-                    self.setState({imageInfo: res});
-                    
+                    self.setState({ imageInfo: res });
+
+                });
+
+                //选择器，弹出图片上传成功
+                Taro.createSelectorQuery().select('.upload').boundingClientRect()
+                .exec(res => {
+                    console.log(res);
                 });
 
 
@@ -82,6 +105,51 @@ export default class Index extends Component<PropsWithChildren, PageState> {
     }
 
 
+
+    imgTouchStart(e) {
+        e.stopPropagation();
+
+        this.__touchEnd = false;
+        if (e.touches.length === 1) {
+            //开始时触摸点的位置
+            this.__touchPos = {
+                //减去图片相对视口的位置，得到手指相对图片的左上角的位置x,y
+                x: e.touches[0].clientX - this.state.imageTouchPosLeft,
+                y: e.touches[0].clientY - this.state.imageTouchPosTop,
+            };
+
+        }
+    }
+
+
+
+    imgTouchMove(e) {
+        e.stopPropagation();
+
+        if (this.__touchEnd) {
+            console.log("结束false");
+            return;
+        }
+
+        if (e.touches.length === 1) {
+
+            let left = e.touches[0].clientX - this.__touchPos.x;
+            let top = e.touches[0].clientY - this.__touchPos.y;
+
+            this.setState({
+                imageTouchPosLeft: left,
+                imageTouchPosTop: top,
+            });
+        }
+
+    }
+
+    imgTouchEnd() {
+        this.__touchEnd = true;
+    }
+
+
+
     componentWillMount() {
 
 
@@ -99,24 +167,37 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
     render() {
         return (
-            <View className="wrapper">
+            <div className="wrapper">
 
-                <View className="page-title">上传</View>
+                <div className="page-title">上传</div>
 
-                <View className="upload">
-                    <View>
+                <div className="upload">
+                    <div>
                         <Button className='btn-max-w' type='primary' onClick={this.uploadImage}>选取图片</Button>
-                    </View>
-
-                    
-                    { this.state.imageInfo ? <View><Image src={`${this.state.imageInfo}`}></Image></View> : null}
-
-                    
-                </View>
+                    </div>
+                    <div>上传后可以移动图片位置</div>
 
 
+                    {this.state.imageInfo ? <div className="preview">
+                        <img
+                            className="dragdrop-obj"
+                            src={`${this.state.imageInfo}`}
+                            style={{
+                                top: this.state.imageTouchPosTop + "px",
+                                left: this.state.imageTouchPosLeft + "px",
+                            }}
+                            onTouchStart={this.imgTouchStart}
+                            onTouchMove={this.imgTouchMove}
+                            onTouchEnd={this.imgTouchEnd}
+                        />
+                    </div> : null}
 
-            </View>
+
+                </div>
+
+
+
+            </div>
         )
     }
 }

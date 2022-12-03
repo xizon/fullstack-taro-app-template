@@ -1,7 +1,8 @@
 import React, { Component, PropsWithChildren } from 'react';
 import Taro from '@tarojs/taro';
-import { View, Text, Button, Image } from '@tarojs/components';
+import { Button } from '@tarojs/components';
 import apiUrls from '@/config/apiUrls';
+import CustomButton from '@/components/Buttons';
 
 import './index.scss';
 
@@ -210,28 +211,29 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
     render() {
         return (
-            <View className="wrapper">
+            <div className="wrapper">
 
-                <View className="page-title">我的</View>
+                <div className="page-title">我的</div>
 
-                <View className="dashboard">
-                    <Text>{
-                        this.state.loginStatus ? `登录状态: ${this.state.loginStatus}` : null
-                    }</Text>
-                    <View>
+                <div className="dashboard">
+                    <p>{this.state.loginStatus ? `登录状态: ${this.state.loginStatus}` : null}</p>
+
+                    <div><CustomButton className='btn-max-w' plain type='primary' btnName='上传图片' href={`/pages/upload/index`} /></div>
+                    <div>
                         <Button className='btn-max-w' type='primary' onClick={this.getUserAuthInfo}>授权获取头像和姓名</Button>
-                        { this.state.hasUserAuthInfo ? <View>
-                            <Image style={{width: '100px', height: '100px'}} src={this.state.userAuthInfo.avatarUrl}></Image>
-                            <Text>{this.state.userAuthInfo.nickName}</Text>   
-                        </View> : null }
+                        { this.state.hasUserAuthInfo ? <div>
+                            <img style={{width: '100px', height: '100px'}} src={this.state.userAuthInfo.avatarUrl} />
+                            <p>{this.state.userAuthInfo.nickName}</p>   
+                        </div> : null }
 
-                    </View>
+                    </div>
+                    
 
-                </View>
+                </div>
                 
                 
 
-            </View>
+            </div>
         )
     }
 }

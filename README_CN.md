@@ -6,6 +6,8 @@
 [English Documentation](README.md) | [中文版说明文档](README_CN.md)
 
 
+<img src="screenshots/demo.gif" width="300px">
+
 ## 提供方案
 
 这里列出完成的的进度:
@@ -22,17 +24,11 @@
 | 上传 | ✔ |
 | 文件系统（针对图片） | ✔ |
 | 链接跳转 | ✔ |
+| 滑动触发器 | ✔ |
+| Canvas演示 | ✔ |
+| HTML5标签 | ✔ |
+| 拖拽移动（针对上传的图片） | ✔ |
 
-
-
-## 预览图
-
-<img src="screenshots/home.png" width="250px">
-<img src="screenshots/posts.png" width="250px">
-<img src="screenshots/post-detail.png" width="250px">
-<img src="screenshots/counter.png" width="250px">
-<img src="screenshots/dashboard.png" width="250px">
-<img src="screenshots/upload.png" width="250px">
 
 
 

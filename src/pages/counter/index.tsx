@@ -1,5 +1,5 @@
-import React, { Component, PropsWithChildren } from 'react';
-import { View, Text, Button } from '@tarojs/components';
+import React, { Component } from 'react';
+import { Button } from '@tarojs/components';
 import { add, minus } from '@/status/actions/counterActions';
 import { connect } from 'react-redux';
 
@@ -72,17 +72,17 @@ class Index extends Component<any, any> {
 
     render() {
         return (
-            <View className="wrapper">
-                <View className="page-title">计数器</View>
-                <Text className="page-desc">当切换不同的页面时计数器的值并不会归零</Text>
+            <div className="wrapper">
+                <div className="page-title">计数器</div>
+                <h5 className="page-desc">当切换不同的页面时计数器的值并不会归零</h5>
 
                 <Button className='btn-max-w' type='primary' onClick={this.props.increment}>+</Button>
                 <Button className='btn-max-w' type='primary' onClick={this.props.decrement}>-</Button>
-                <View className="number"><Text>{this.props.currentData}</Text></View>
+                <div className="number">{this.props.currentData}</div>
 
 
                 
-            </View>
+            </div>
         )
     }
 }
