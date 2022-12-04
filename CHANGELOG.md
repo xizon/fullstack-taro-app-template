@@ -1,6 +1,13 @@
 # Changelog
 
 
+#### = 1.0.5 (December 4, 2022) =
+
+* new: Add Pagination demo.
+* new: Add Cloud Hosting package.
+* tweak: File directory and navigation optimization.
+
+
 #### = 1.0.3 (December 3, 2022) =
 
 * new: Add authorization demo for obtaining personal information.

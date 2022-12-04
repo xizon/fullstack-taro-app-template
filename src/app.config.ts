@@ -3,11 +3,14 @@ export default defineAppConfig({
     pages: [
         'pages/index/index',
         'pages/posts/index',
+        'pages/posts/index-cloudhosting',
         'pages/post-detail/index',
         'pages/counter/index',
         'pages/dashboard/index',
         'pages/upload/index',
-        'pages/canvas/index'
+        'pages/canvas/index',
+        'pages/webview/index'
+
     ],
     window: {
         backgroundTextStyle: 'light',

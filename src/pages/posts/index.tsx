@@ -26,7 +26,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
     }
 
     // getList = () => { ... }
-    getList( nextpage = false ) {   
+    getList() {   
         const self = this;
         this.setState({ loading: true });
         Taro.showLoading({ title: '加载中' })
@@ -54,15 +54,6 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                     list: res.data
                 });
 
-                //分页的一些业务代码，如：
-                /*
-                if ( nextpage ) {
-                    self.setState((prevState: any) => ({
-                        list: prevState.list.concat(res.data),
-                        loading: false
-                    }));
-                }
-                */
 
             }
         });
@@ -101,7 +92,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                     scrollTop={0}
                     lowerThreshold={20}
                     upperThreshold={20}
-                    onScrollToUpper={this.getList.bind(this, false)} // 使用箭头函数的时候 可以这样写 `onScrollToUpper={this.getList(false)}`
+                    onScrollToUpper={this.getList.bind(this)} // 使用箭头函数的时候 可以这样写 `onScrollToUpper={this.getList()}`
                     onScroll={this.onScroll}
                 >
 

@@ -7,6 +7,8 @@
 
 
 <img src="screenshots/demo.gif" width="300px">
+<img src="screenshots/demo-pagination.gif" width="300px">
+
 
 ## 提供方案
 
@@ -28,6 +30,9 @@
 | Canvas演示 | ✔ |
 | HTML5标签 | ✔ |
 | 拖拽移动（针对上传的图片） | ✔ |
+| 分页 | ✔ |
+| 云部署 | ✔ |
+| 嵌入远程页面 | ✔ |
 
 
 
@@ -44,6 +49,8 @@ fullstack-taro-app-template/
 ├── tsconfig.json
 ├── package-lock.json
 ├── package.json                # Node.js manifest
+├── screenshots/                # 截图
+├── cloud-hosting/              # 云托管后端服务器文件包
 ├── dist/                       # 打包目录
 ├── config                      # 编译配置目录
 │   ├── dev.js                  # 开发模式配置

@@ -6,6 +6,8 @@
 
 
 <img src="screenshots/demo.gif" width="300px">
+<img src="screenshots/demo-pagination.gif" width="300px">
+
 
 ## Scheme
 
@@ -27,8 +29,9 @@ List my progress here:
 | Canvas | ✔ |
 | HTML5 Tags | ✔ |
 | DragDrop (for uploaded image) | ✔ |
-
-
+| Pagination | ✔ |
+| Cloud Hosting | ✔ |
+| WebView | ✔ |
 
 
 ## File Structures
@@ -43,6 +46,8 @@ fullstack-taro-app-template/
 ├── tsconfig.json
 ├── package-lock.json
 ├── package.json                # Node.js manifest
+├── screenshots/                # screenshots
+├── cloud-hosting/              # Deploy backend server using Cloud Hosting
 ├── dist/                       # Packaged Directory
 ├── config                      # Compile configuration directory
 │   ├── dev.js                  # Development Mode Configuration
