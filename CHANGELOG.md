@@ -1,6 +1,13 @@
 # Changelog
 
 
+
+#### = 1.0.6 (December 6, 2022) =
+
+* new: Import taro-ui-base.
+* tweak: Change the Counter to Favorite demo.
+
+
 #### = 1.0.5 (December 4, 2022) =
 
 * new: Add Pagination demo.

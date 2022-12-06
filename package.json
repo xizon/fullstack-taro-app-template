@@ -1,6 +1,6 @@
 {
   "name": "fullstack-taro-app-template",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "This repository is a full-stack sample mini program based on Taro that creates a simple extended architecture.",
   "templateInfo": {
     "name": "default",
@@ -90,7 +90,8 @@
     "react-dom": "^18.0.0",
     "react-redux": "^8.0.5",
     "redux": "^4.2.0",
-    "redux-thunk": "^2.4.2"
+    "redux-thunk": "^2.4.2",
+    "taro-ui": "^3.1.0-beta.4"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",

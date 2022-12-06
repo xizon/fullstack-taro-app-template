@@ -1,21 +1,27 @@
-import { ADD, MINUS } from '@/status/constants/counterActionTypes';
+import { ADD, REMOVE } from '@/status/constants/favActionTypes';
 
 //initialize state
 const initialState = {
-    num: 0
+    ids: []
 };
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case ADD:
+
+            state.ids.push(action.id);
+
             return {
                 ...state,
-                num: state.num + 1
+                ids: Array.from(new Set(state.ids))
             }
-        case MINUS:
+        case REMOVE:
+
+            state.ids = state.ids.filter( item => item != action.id);
+
             return {
                 ...state,
-                num: state.num - 1
+                ids: state.ids
             }
         default:
             return state

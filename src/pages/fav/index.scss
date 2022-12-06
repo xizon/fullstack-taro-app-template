@@ -1,0 +1,38 @@
+
+
+.fav {
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgb(194, 194, 194);
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.fav-imgbtn {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: none !important;
+    border-radius: 0% !important;
+    line-height: 1 !important;
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    top: 10px;
+    opacity: .3;
+    transition: .1s ease-in-out;
+
+    &::after {
+        display: none !important;
+    }
+
+    .fav-imgbtn__img {
+        width: 35px;
+        height: 35px;  
+    }
+
+    &.fav-imgbtn--active {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+

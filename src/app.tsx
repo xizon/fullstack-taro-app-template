@@ -2,6 +2,7 @@ import React, { Component, PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
 import '@/app.scss';
 
+
 import configureStore from '@/status/store/createStore';
 const store = configureStore();
 

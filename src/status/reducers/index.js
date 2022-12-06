@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import counterReducer from '@/status/reducers/counterReducer';
+import favReducer from '@/status/reducers/favReducer';
 import postsReducer from '@/status/reducers/postsReducer';
 
 const rootReducer = combineReducers({
-    counterReducer,
+    favReducer,
     postsReducer
 });
 

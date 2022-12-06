@@ -1,6 +1,9 @@
 
 
-// 0.025rem 相当于1个像素
+// 全局引入taro-ui样式(按需引入)
+// 使用JS导入可能会导致H5的单位不自动转换为em
+@import 'taro-ui/dist/style/components/article.scss'; 
+
 
 body {
     margin: 0;
@@ -14,13 +17,26 @@ body {
     padding: 30px;
 }
 
+
+/* 通用 */
+.page-hr {
+    margin: 30px 0;
+    display: block;
+    unicode-bidi: isolate;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    overflow: hidden;
+    border-bottom: 1px inset rgb(194, 194, 194);
+}
+
 .page-small {
     font-size: 30px;
 }
 
 .page-title {
     font-size: 50px;
-    font-weight: bold;
     padding: 10px;
     margin-bottom: 15px;
 }
@@ -29,8 +45,11 @@ body {
     display: block;
     padding: 10px;
     margin-bottom: 20px;
+    color: rgb(180, 180, 180);
 }
 
+
+/* 自定义按钮 */
 .btn-max-w {
     margin-bottom: 15px;
 }

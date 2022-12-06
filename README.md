@@ -32,6 +32,8 @@ List my progress here:
 | Pagination | ✔ |
 | Cloud Hosting | ✔ |
 | WebView | ✔ |
+| Basic Taro-UI | ✔ |
+
 
 
 ## File Structures

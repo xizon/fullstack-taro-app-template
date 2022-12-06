@@ -5,7 +5,7 @@ export default defineAppConfig({
         'pages/posts/index',
         'pages/posts/index-cloudhosting',
         'pages/post-detail/index',
-        'pages/counter/index',
+        'pages/fav/index',
         'pages/dashboard/index',
         'pages/upload/index',
         'pages/canvas/index',
@@ -34,14 +34,14 @@ export default defineAppConfig({
             {
                 pagePath: "pages/posts/index",
                 text: "文章列表",
-                iconPath: "./assets/images/icon2.png",
-                selectedIconPath: "./assets/images/icon2-active.png"
-            },
-            {
-                pagePath: "pages/counter/index",
-                text: "计数器",
                 iconPath: "./assets/images/icon4.png",
                 selectedIconPath: "./assets/images/icon4-active.png"
+            },
+            {
+                pagePath: "pages/fav/index",
+                text: "收藏",
+                iconPath: "./assets/images/icon2.png",
+                selectedIconPath: "./assets/images/icon2-active.png"
             },
             {
                 pagePath: "pages/dashboard/index",
