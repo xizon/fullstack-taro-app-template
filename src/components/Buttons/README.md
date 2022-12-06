@@ -9,7 +9,7 @@
 
 ### Buttons
 ```js
-import Button from '@/components/Buttons';
+import CustomButton from '@/components/Buttons';
 ```
 | Property | Type | Default | Description |
 | --- | --- | --- | --- |
