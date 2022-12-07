@@ -15,3 +15,8 @@ RUN sed -i 's/80/8080/g' /etc/apache2/sites-available/000-default.conf /etc/apac
 # RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 # 参考：https://hub.docker.com/_/php#configuration
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+
+
+# 启用 php 扩展(支持数据库、图像等)
+RUN docker-php-ext-install mysqli
+

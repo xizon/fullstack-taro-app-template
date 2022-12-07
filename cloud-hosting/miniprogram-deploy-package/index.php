@@ -6,7 +6,7 @@ header('Content-type: application/json');
 $paged = null;
 
 if ( isset( $_GET[ 'page' ] ) && isset( $_GET[ 'page' ] ) ) {
-	$paged = $_GET[ 'page' ];
+	$paged = filter_var($_GET[ 'page' ], FILTER_SANITIZE_NUMBER_INT);
 }
 
 $RESTful_res = json_encode( array(
