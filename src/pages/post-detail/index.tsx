@@ -1,5 +1,6 @@
 import React, { Component, PropsWithChildren } from 'react';
 import Taro from '@tarojs/taro';
+import { Image } from '@tarojs/components';
 import CustomButton from '@/components/Buttons';
 import './index.scss';
 import apiUrls from '@/config/apiUrls';
@@ -93,7 +94,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                         this.state.loading ? <div>Loading...</div> : this.state.detail ? (
                             <div>
                                 <div className="page-title">{this.state.detail.name}</div>
-                                <div><img className="detail-img" src={this.state.detail.flag} /></div>
+                                <div><Image mode="widthFix" src={this.state.detail.flag} style='width: 100%;'/></div>
                                 <p>{this.state.detail.name}  - (region: {this.state.detail.region})</p>
                                 <div><CustomButton className='btn-max-w' plain type='primary' btnName='返回上一页' href={`${this.prevPagePathAbsolutePath}`} /></div>
                                 <p className="page-small">(注：小程序不能直接跳转到底部菜单栏)</p>

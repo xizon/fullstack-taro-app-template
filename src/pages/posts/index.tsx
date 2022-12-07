@@ -1,6 +1,6 @@
 import React, { Component, PropsWithChildren } from 'react';
 import Taro from '@tarojs/taro';
-import { ScrollView } from '@tarojs/components';
+import { ScrollView, Image } from '@tarojs/components';
 import apiUrls from '@/config/apiUrls';
 
 import './index.scss';
@@ -100,7 +100,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                         this.state.loading ? <div>Loading...</div> : this.state.list ? this.state.list.map((post, key) => {
                             return (
                                 <div className="item" key={key} onClick={(e) => this.linkTo(e, '/pages/post-detail/index?name=' + post.name)}>
-                                    <div><img className="img" src={post.flag} /></div>
+                                    <div><Image mode="widthFix" src={post.flag} style='width: 90%;'/></div>
                                     <p>{post.name}  - (region: {post.region})</p>
                                 </div>
                             )

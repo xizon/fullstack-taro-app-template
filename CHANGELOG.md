@@ -1,6 +1,12 @@
 # Changelog
 
 
+#### = 1.0.7 (December 7, 2022) =
+
+* tweak: Optimization of requests and authorizations.
+* tweak: Perfect cloud deployment data query.
+* fix: Image adaptive.
+
 
 #### = 1.0.6 (December 6, 2022) =
 

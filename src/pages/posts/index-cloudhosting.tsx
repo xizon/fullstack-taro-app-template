@@ -67,7 +67,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
          if (process.env.NODE_ENV === 'development') {
 
             Taro.request({
-                url: 'http://127.0.0.1:8888/fullstack-taro-app-template/cloud-hosting/miniprogram-deploy-package/index.php?page=' + nextpage, // 填入容器的访问路径
+                url: 'http://127.0.0.1:8888/fullstack-taro-app-template/cloud-hosting/miniprogram-deploy-package/list.php?page=' + nextpage, // 填入容器的访问路径
                 method: 'GET',
                 success: function (res: any) {
                     self.displayData(res, nextpage);
@@ -83,7 +83,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
 
         Taro.cloud.callContainer({
-            path: '/?page=' + nextpage, // 填入容器的访问路径
+            path: '/list.php?page=' + nextpage, // 填入容器的访问路径
             method: 'GET',
             header: {
                 "X-WX-SERVICE": "express-7bh9",
@@ -95,7 +95,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
     
 
         }).catch(err => {
-            Taro.showLoading({ title: '后端服务正在启动中，请稍后重试' });
+            Taro.showLoading({ title: '后端服务重启中' });
             console.log(err);
         });
 
@@ -124,7 +124,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         // 下面的参数配置请参考小程序云部署后的参考代码
         // 注意：不能使用测试的appid, 需要使用正式申请的小程序ID才能正确请求云部署的文件
         Taro.cloud.init({
-            env: "prod-xxxxxxxxxx"
+            env: "prod-xxxxxxxxxxxxxxxxx"
         });
 
 
@@ -162,9 +162,8 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                         this.state.loading ? <div>Loading...</div> : this.state.list ? this.state.list.map((post, key) => {
                             return (
                                 <div className="item" key={key}>
-                                    <div><img className="img" src={post.avatar} /></div>
-                                    <p>{post.name}  - (email: {post.email})</p>
-                                    <p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p><p>...</p>
+                                    <p>{key+1}. {post.title} (第{this.state.page}页)</p>
+                                    <div className="item-img"></div>
                                 </div>
                                 
                             )

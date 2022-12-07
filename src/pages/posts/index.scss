@@ -8,14 +8,19 @@
     background: #ffffff;
     border-radius: 0.1rem;
 
-    // 请勿直接使用 <img> 标签，它可能会与小程序不兼容
-    .img {
-        width: 100px;
-        height: 50px;
-    }
 
     &:nth-child(even) {
         margin-left: -0.025rem;
+    }
+
+    .item-img {
+        display: block;
+        width: 90%;
+        height: 500px;
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 10px;
+        background-color: #333;
     }
 }
 
