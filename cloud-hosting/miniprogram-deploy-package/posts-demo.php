@@ -1,10 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: Content-Type');
-header('Content-type: application/json');
-
-include dirname(__FILE__) . '/format.php';
-
+include dirname(__FILE__) . '/includes/_inc.php';
 
 $paged = null;
 

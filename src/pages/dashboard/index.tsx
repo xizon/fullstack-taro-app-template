@@ -51,7 +51,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
          * # 使用H5测试  start   
          * 注意：
-         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/sql-conn.php 数据库配置
+         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/includes/conn.php 数据库配置
          * 2) 请检查请求的测试地址 (外网URL或者localhost是否通畅)
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
         if (process.env.NODE_ENV === 'development') {
@@ -121,7 +121,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
          * # 使用H5测试  start   
          * 注意：
-         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/sql-conn.php 数据库配置
+         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/includes/conn.php 数据库配置
          * 2) 请检查请求的测试地址 (外网URL或者localhost是否通畅)
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
         if (process.env.NODE_ENV === 'development') {
@@ -168,7 +168,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 
         Taro.cloud.callContainer({
-            path: '/user.php', // 填入容器的访问路径
+            path: cloudConfig.LOGIN_REQUEST,
             method: 'POST',
             header: cloudConfig.callContainerHeader,
             data: {
@@ -212,7 +212,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
          * # 使用H5测试  start   
          * 注意：
-         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/sql-conn.php 数据库配置
+         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/includes/conn.php 数据库配置
          * 2) 请检查请求的测试地址 (外网URL或者localhost是否通畅)
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
         if (process.env.NODE_ENV === 'development') {
@@ -310,7 +310,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
          * # 使用H5测试  start   
          * 注意：
-         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/sql-conn.php 数据库配置
+         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/includes/conn.php 数据库配置
          * 2) 请检查请求的测试地址 (外网URL或者localhost是否通畅)
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
         if (process.env.NODE_ENV === 'development') {

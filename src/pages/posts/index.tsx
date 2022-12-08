@@ -32,7 +32,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         Taro.showLoading({ title: '加载中' })
 
         Taro.request({
-            url: apiUrls.RECEIVE_DEMO_LIST,
+            url: apiUrls.RECEIVE_LIST,
             method: 'GET',
             header: {},
             success: function (res) {

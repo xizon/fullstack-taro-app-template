@@ -1,7 +1,7 @@
 # Changelog
 
 
-#### = 1.0.8 (December 7, 2022) =
+#### = 1.1.0 (December 8, 2022) =
 
 * new: Add cloud configuration file.
 * tweak: Optimization of requests and authorizations.
