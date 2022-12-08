@@ -16,6 +16,22 @@ function sanitize_float( $str = '' ) {
 }
 
 
+/**
+ * HTML Encode
+ */
+function html_encode($str) {
+    return htmlspecialchars($str);
+}
+
+
+/**
+ * HTML Decode
+ */
+function html_decode($str) {
+    return htmlspecialchars_decode($str);
+}
+
+
 
 /**
  * Replaces double line breaks with paragraph elements.

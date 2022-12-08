@@ -16,7 +16,15 @@ const config = {
     TYPE: User
     ------------------------------------------
     */
-    "LOGIN_REQUEST": "/user.php"
+    "LOGIN_REQUEST": "/user.php",
+
+
+    /*
+    TYPE: User operations
+    ------------------------------------------
+    */
+    "USER_FAV": "/user-fav.php"
+
 };
 
 // node & browser

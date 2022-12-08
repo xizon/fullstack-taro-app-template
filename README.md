@@ -18,7 +18,7 @@ List my progress here:
 | Navigation | ✔ |
 | Parameter Acquisition | ✔ |
 | Authorization | ✔ |
-| Login | ✔ |
+| Login\/Logout | ✔ |
 | Register | ✔ |
 | State Management | ✔ |
 | Network Requests | ✔ |
@@ -33,7 +33,8 @@ List my progress here:
 | Cloud Hosting | ✔ |
 | WebView | ✔ |
 | Basic Taro-UI | ✔ |
-
+| CURD | ✔ |
+| Authority Diagnosis | ✔ |
 
 
 ## File Structures

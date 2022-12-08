@@ -8,6 +8,7 @@ type PageState = {
     imageInfo?: any | null;
     imageTouchPosLeft?: any | null;
     imageTouchPosTop?: any | null;
+    logged?: boolean;
 
 };
 
@@ -21,7 +22,8 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         this.state = {
             imageInfo: null,
             imageTouchPosLeft: 0,
-            imageTouchPosTop: 0
+            imageTouchPosTop: 0,
+            logged: false
         }
 
         this.__touchEnd = false;
@@ -59,9 +61,9 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
                 //选择器，弹出图片上传成功
                 Taro.createSelectorQuery().select('.upload').boundingClientRect()
-                .exec(res => {
-                    console.log(res);
-                });
+                    .exec(res => {
+                        console.log(res);
+                    });
 
 
             }
@@ -152,6 +154,18 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
     componentWillMount() {
 
+        //判断是否已经授权
+        const value = Taro.getStorageSync('DATA_SESSION_LOGGED');
+        if (value.length > 0) {
+            this.setState({
+                logged: true
+            });
+        } else {
+            this.setState({
+                logged: false
+            });
+        }
+
 
     }
 
@@ -172,24 +186,26 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 <div className="page-title">上传</div>
 
                 <div className="upload">
-                    <div>
+                    {!this.state.logged ? <div className="page-desc">授权登录后才能使用上传图片功能</div> : <div>
                         <Button className='btn-max-w' type='primary' onClick={this.uploadImage}>选取图片</Button>
-                    </div>
-                    <div>上传后可以移动图片位置</div>
+                    </div>}
 
 
-                    {this.state.imageInfo ? <div className="preview">
-                        <img
-                            className="dragdrop-obj"
-                            src={`${this.state.imageInfo}`}
-                            style={{
-                                top: this.state.imageTouchPosTop + "px",
-                                left: this.state.imageTouchPosLeft + "px",
-                            }}
-                            onTouchStart={this.imgTouchStart}
-                            onTouchMove={this.imgTouchMove}
-                            onTouchEnd={this.imgTouchEnd}
-                        />
+                    {this.state.imageInfo ? <div>
+                        <div>上传后可以移动图片位置</div>
+                        <div className="preview">
+                            <img
+                                className="dragdrop-obj"
+                                src={`${this.state.imageInfo}`}
+                                style={{
+                                    top: this.state.imageTouchPosTop + "px",
+                                    left: this.state.imageTouchPosLeft + "px",
+                                }}
+                                onTouchStart={this.imgTouchStart}
+                                onTouchMove={this.imgTouchMove}
+                                onTouchEnd={this.imgTouchEnd}
+                            />
+                        </div>
                     </div> : null}
 
 

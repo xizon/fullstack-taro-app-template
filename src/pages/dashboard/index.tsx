@@ -28,11 +28,26 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         this.getUserAuthInfo = this.getUserAuthInfo.bind(this);
         this.databaseForUserInfo = this.databaseForUserInfo.bind(this);
         this.getOpenID = this.getOpenID.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
 
     sysInfo: any = Taro.getSystemInfoSync();  // 获取调试环境的信息
 
+
+    logout() {
+        this.setState({
+            userAuthInfo: null,
+            sessionExpired: true
+        });
+
+        Taro.removeStorageSync('DATA_SESSION_LOGGED');
+        Taro.removeStorageSync('DATA_SESSION_USERINFO');
+
+        //跳转页面
+        Taro.redirectTo({ url: "/pages/index/index" });
+         
+    }
 
     getOpenID(userInfo: any = false, callback: any = false) {
 
@@ -56,7 +71,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
         if (process.env.NODE_ENV === 'development') {
 
-            const res = { errMsg: 'ok', code: 'apptestopenid0001' }
+            const res = { errMsg: 'ok', code: 'apptestopenid0002' }
             console.log("Taro.login() result: ", res);
 
             self.setState({
@@ -118,6 +133,21 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
     databaseForUserInfo(obj: any = false, openid: any = false, callback: any = false) {
 
+        const _data = obj !== false ? {
+            //得到登录用户的临时 code (小程序返回，通常请只需要传入它即可，其他字段根据业务需求决定)
+            code: openid,
+            update: 1,
+
+            //用户的其它资料，同步更新到数据库
+            nickname: obj.nickName,
+            gender: obj.gender,
+            city: obj.city,
+            province: obj.province,
+            country: obj.country,
+            avatar: obj.avatarUrl
+        } : { code: openid, update: 0 };
+
+
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
          * # 使用H5测试  start   
          * 注意：
@@ -125,20 +155,6 @@ export default class Index extends Component<PropsWithChildren, PageState> {
          * 2) 请检查请求的测试地址 (外网URL或者localhost是否通畅)
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
         if (process.env.NODE_ENV === 'development') {
-
-            let _data = obj !== false ? {
-                //得到登录用户的临时 code (小程序返回，通常请只需要传入它即可，其他字段根据业务需求决定)
-                code: openid,
-                update: 1,
-
-                //用户的其它资料，同步更新到数据库
-                nickname: obj.nickName,
-                gender: obj.gender,
-                city: obj.city,
-                province: obj.province,
-                country: obj.country,
-                avatar: obj.avatarUrl
-            } : { code: openid, update: 0 };
 
             // 小程序里没有FormData类，所以POST方法如果要传multipart/form-data就会报错
             // payload是一种以JSON格式进行数据传输的一种方式，默认采用这种方式
@@ -171,19 +187,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
             path: cloudConfig.LOGIN_REQUEST,
             method: 'POST',
             header: cloudConfig.callContainerHeader,
-            data: {
-                //得到登录用户的临时 code (小程序返回，通常请只需要传入它即可，其他字段根据业务需求决定)
-                code: openid,
-
-                //用户的其它资料，同步更新到数据库
-                nickname: obj.nickName,
-                gender: obj.gender,
-                city: obj.city,
-                province: obj.province,
-                country: obj.country,
-                avatar: obj.avatarUrl
-
-            },
+            data: _data,
         }).then(res => {
 
             if (res.statusCode !== 200) {
@@ -219,7 +223,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
             //用户数据
             const _userInfo = {
-                nickName: '用户昵称0001',
+                nickName: '用户昵称0002',
                 gender: 1,
                 city: '成都',
                 province: '四川',
@@ -434,7 +438,8 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
             <div className="wrapper">
 
-                <div className="page-title">我的</div>
+                <div className="page-title">我的 {this.state.userAuthInfo ? <small style={{color:'gray',fontSize: '.7em'}} onClick={this.logout}>退出</small> : null}</div>
+
                 {this.state.sessionExpired ? <div className="page-desc"><div className="at-article__info">登录已过期或者未登录过应用，需要重新授权！</div></div> : null}
 
                 <div className="dashboard">

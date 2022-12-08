@@ -44,7 +44,7 @@ $username = $b_user['login'];
 if ( !is_null($username) ) {
 
     if ( $update == 1 ) { 
-        //更细信息
+        //更新信息
         $b_user['nickname'] = $userinfo['nickname'];
         $b_user['gender'] = $userinfo['gender'];
         $b_user['address'] = '{"city":"'.$userinfo['city'].'", "province":"'.$userinfo['province'].'", "country":"'.$userinfo['country'].'"}';

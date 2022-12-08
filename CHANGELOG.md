@@ -1,8 +1,10 @@
 # Changelog
 
 
-#### = 1.1.0 (December 8, 2022) =
+#### = 1.1.1 (December 8, 2022) =
 
+* new: Add logout button.
+* new: Link favorites to user.
 * new: Add cloud configuration file.
 * tweak: Optimization of requests and authorizations.
 * tweak: Perfect cloud deployment data query.
