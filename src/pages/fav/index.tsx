@@ -174,21 +174,39 @@ class Index extends Component<any, any>  {
     }
 
 
-    componentWillMount() {
+    // 组件初次加载和小程序页面切换时触发
+    // 用于 `componentWillMount()` 和 `componentDidShow()`
+    pageSwitchFun() {
 
         const self = this;
+        
+        //判断是否已经授权
+        const value = Taro.getStorageSync('DATA_SESSION_LOGGED');
+        if (value.length > 0) {
+            self.setState({
+                logged: true,
+                openid: value
+            });
+        } else {
+            self.setState({
+                logged: false,
+                loggedTip: false,
+                openid: false
+            });
+        }
 
-        const loggedCheck = () => {
-            //判断是否已经授权
-            const value = Taro.getStorageSync('DATA_SESSION_LOGGED');
-            if (value.length > 0) {
-                this.setState({
-                    logged: true,
-                    openid: value
-                });
+
+        //获取收藏的项目
+        // Taro.getStorage()是异步的，所以可以保证Taro.cloud.init()优先执行，保证databaseForUserFav()正确执行云请求
+        Taro.getStorage({
+            key: 'DATA_SESSION_LOGGED',
+            success: function (res) {
+                const _openid = res.data;
 
                 // 触发dispatch改变整体收藏状态
-                this.databaseForUserFav(false, value, function (response) {
+                self.databaseForUserFav(false, _openid, function (response) {
+
+                    console.log('pageSwitchFun() response: ', response);
                     if (response !== false && response.userinfo.favors) {
 
                         const favored = JSON.parse(response.userinfo.favors);
@@ -199,15 +217,13 @@ class Index extends Component<any, any>  {
                     }
                 });
 
-
-            } else {
-                this.setState({
-                    logged: false,
-                    loggedTip: false,
-                    openid: false
-                });
             }
-        }
+        });
+
+    }
+
+    componentWillMount() {
+        this.pageSwitchFun();
 
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
          * # 使用H5测试  start   
@@ -216,10 +232,7 @@ class Index extends Component<any, any>  {
          * 2) 请检查请求的测试地址 (外网URL或者localhost是否通畅)
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 
-        if (process.env.NODE_ENV === 'development') {
-            loggedCheck();
-            return;
-        }
+        if (process.env.NODE_ENV === 'development') return;
 
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
          * # 使用H5测试  end   
@@ -232,9 +245,6 @@ class Index extends Component<any, any>  {
             env: cloudConfig.env
         });
 
-        loggedCheck();
-
-
     }
 
 
@@ -242,7 +252,9 @@ class Index extends Component<any, any>  {
 
     componentWillUnmount() { }
 
-    componentDidShow() { }
+    componentDidShow() { 
+        this.pageSwitchFun();
+    }
 
     componentDidHide() { }
 

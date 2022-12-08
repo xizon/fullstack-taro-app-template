@@ -50,6 +50,10 @@ if ( !is_null($username) ) {
         $b_user['address'] = '{"city":"'.$userinfo['city'].'", "province":"'.$userinfo['province'].'", "country":"'.$userinfo['country'].'"}';
         $b_user['avatar'] = $userinfo['avatar'];
         $sql_db->row_update("users_app", $b_user, "open_id = '{$id}'"); 
+
+        //获取其它信息
+        $userinfo['favors'] = $b_user['intro'];
+
     } else {
         //获取信息
         
@@ -62,6 +66,7 @@ if ( !is_null($username) ) {
             "province" => $address->province,
             "country" => $address->country,
             "avatar" => $b_user['avatar'],
+            "favors" => $b_user['intro']
         );
 
     }

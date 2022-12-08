@@ -24,7 +24,7 @@ const config = {
     TYPE: User operations
     ------------------------------------------
     */
-    "USER_FAV": "http://127.0.0.1:8888/miniprogram-programmer-math-handbook/cloud-hosting/miniprogram-deploy-package/user-fav.php"
+    "USER_FAV": "http://127.0.0.1:8888/fullstack-taro-app-template/cloud-hosting/miniprogram-deploy-package/user-fav.php"
 
 };
 

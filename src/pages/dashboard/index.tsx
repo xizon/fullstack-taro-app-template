@@ -46,7 +46,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
         //跳转页面
         Taro.redirectTo({ url: "/pages/index/index" });
-         
+
     }
 
     getOpenID(userInfo: any = false, callback: any = false) {
@@ -54,7 +54,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         const self = this;
 
         //更新最新的用户数据
-        if ( userInfo !== false ) {
+        if (userInfo !== false) {
             Taro.setStorage({
                 key: 'DATA_SESSION_USERINFO',
                 data: userInfo
@@ -62,7 +62,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
         }
 
-        
+
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
          * # 使用H5测试  start   
          * 注意：
@@ -71,13 +71,13 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
         if (process.env.NODE_ENV === 'development') {
 
-            const res = { errMsg: 'ok', code: 'apptestopenid0002' }
+            const res = { errMsg: 'ok', code: 'apptestopenid0003' }
             console.log("Taro.login() result: ", res);
 
             self.setState({
                 sessionExpired: false
             });
-    
+
 
             if (res.code) {
                 //
@@ -114,7 +114,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 self.setState({
                     sessionExpired: false
                 });
-        
+
                 if (res.code) {
                     //
                     Taro.setStorage({
@@ -223,7 +223,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
             //用户数据
             const _userInfo = {
-                nickName: '用户昵称0002',
+                nickName: '用户昵称0003',
                 gender: 1,
                 city: '成都',
                 province: '四川',
@@ -232,7 +232,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
             };
 
             // 保存 OPENID, 并比对数据库用户是否存在
-            self.getOpenID( _userInfo, function (id) {
+            self.getOpenID(_userInfo, function (id) {
 
                 self.databaseForUserInfo(_userInfo, id, function (response) {
 
@@ -252,7 +252,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
          * # 使用H5测试  end   
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
-        
+
 
 
         // 注意：getUserProfile 只能由用户 TAP 手势调用
@@ -274,6 +274,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
                             self.databaseForUserInfo(_userInfo, id, function (response) {
 
+                                console.log('getUserAuthInfo() response: ', response);
                                 if (response !== false) {
 
                                     self.setState({
@@ -306,10 +307,19 @@ export default class Index extends Component<PropsWithChildren, PageState> {
     }
 
 
+    // 组件初次加载和小程序页面切换时触发
+    // 用于 `componentWillMount()` 和 `componentDidShow()`
+    pageSwitchFun() {
+
+        //通常用来更新用户的其它信息，比如收藏的项目，用户的动态等等
+        console.log('pageSwitchFun()');
+
+    }
+
     componentWillMount() {
+        this.pageSwitchFun();
 
         const self = this;
-
 
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
          * # 使用H5测试  start   
@@ -354,7 +364,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                         userAuthInfo: null,
                         sessionExpired: true
                     });
-        
+
                 }
             });
 
@@ -366,7 +376,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 
 
-        
+
         // 下面的参数配置请参考小程序云部署后的参考代码
         // 注意：不能使用测试的appid, 需要使用正式申请的小程序ID才能正确请求云部署的文件
         Taro.cloud.init({
@@ -428,7 +438,9 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
     componentWillUnmount() { }
 
-    componentDidShow() { }
+    componentDidShow() {
+        this.pageSwitchFun();
+    }
 
     componentDidHide() { }
 
@@ -438,27 +450,27 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
             <div className="wrapper">
 
-                <div className="page-title">我的 {this.state.userAuthInfo ? <small style={{color:'gray',fontSize: '.7em'}} onClick={this.logout}>退出</small> : null}</div>
+                <div className="page-title">我的 {this.state.userAuthInfo ? <small style={{ color: 'gray', fontSize: '.7em' }} onClick={this.logout}>退出</small> : null}</div>
 
                 {this.state.sessionExpired ? <div className="page-desc"><div className="at-article__info">登录已过期或者未登录过应用，需要重新授权！</div></div> : null}
 
                 <div className="dashboard">
-                
+
                     <div><CustomButton className='btn-max-w' plain type='primary' btnName='上传图片' href={`/pages/upload/index`} /></div>
                     <div>
 
-                        {this.state.userAuthInfo ? <div>
-                            <img style={{ width: '50px', height: '50px' }} src={this.state.userAuthInfo.avatarUrl} />
-                            <p>{this.state.userAuthInfo.nickName}</p>
+                        {this.state.userAuthInfo ? <div className="userarea">
+                            <img className="userarea__avatar" src={this.state.userAuthInfo.avatarUrl} />
+                            <p className="userarea__name">{this.state.userAuthInfo.nickName}</p>
                         </div> : <div>
                             <Button className='btn-max-w app-btn-s1' type='primary' onClick={this.getUserAuthInfo}>授权获取用户头像和姓名</Button>
                         </div>}
 
                     </div>
-                    
+
 
                 </div>
-                
+
             </div>
         )
     }
