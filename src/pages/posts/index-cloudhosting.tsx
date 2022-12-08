@@ -1,6 +1,8 @@
 import React, { Component, PropsWithChildren } from 'react';
 import Taro from '@tarojs/taro';
-import { ScrollView } from '@tarojs/components';
+import { ScrollView, Image } from '@tarojs/components';
+import cloudConfig from '@/config/cloudConfig';
+
 
 import './index.scss';
 
@@ -60,11 +62,13 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         Taro.showLoading({ title: '加载中' })
 
 
-
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-         /* +++++++++++++++ 使用H5测试  start +++++++++++++++  */
-         /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-         if (process.env.NODE_ENV === 'development') {
+        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+         * # 使用H5测试  start   
+         * 注意：
+         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/sql-conn.php 数据库配置
+         * 2) 请检查请求的测试地址 (外网URL或者localhost是否通畅)
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+        if (process.env.NODE_ENV === 'development') {
 
             Taro.request({
                 url: 'http://127.0.0.1:8888/fullstack-taro-app-template/cloud-hosting/miniprogram-deploy-package/list.php?page=' + nextpage, // 填入容器的访问路径
@@ -77,18 +81,15 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
             return;
          }
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-         /* ++++++++++++++++ 使用H5测试  end ++++++++++++++++  */
-         /* ++++++++++++++++++++++++++++++++++++++++++++++++  */        
+        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+         * # 使用H5测试  end   
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 
 
         Taro.cloud.callContainer({
-            path: '/list.php?page=' + nextpage, // 填入容器的访问路径
+            path: '/posts-demo.php?page=' + nextpage, // 填入容器的访问路径
             method: 'GET',
-            header: {
-                "X-WX-SERVICE": "express-7bh9",
-                "content-type": "application/json"
-            },
+            header: cloudConfig.callContainerHeader,
             data: ""
         }).then(res => {
             self.displayData(res, nextpage);
@@ -111,20 +112,25 @@ export default class Index extends Component<PropsWithChildren, PageState> {
     componentWillMount() {
 
 
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-         /* +++++++++++++++ 使用H5测试  start +++++++++++++++  */
-         /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-         if (process.env.NODE_ENV === 'development') return;
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-         /* ++++++++++++++++ 使用H5测试  end ++++++++++++++++  */
-         /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
+        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+         * # 使用H5测试  start   
+         * 注意：
+         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/sql-conn.php 数据库配置
+         * 2) 请检查请求的测试地址 (外网URL或者localhost是否通畅)
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+      
+        if (process.env.NODE_ENV === 'development') return;
+
+        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+         * # 使用H5测试  end   
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 
 
 
         // 下面的参数配置请参考小程序云部署后的参考代码
         // 注意：不能使用测试的appid, 需要使用正式申请的小程序ID才能正确请求云部署的文件
         Taro.cloud.init({
-            env: "prod-xxxxxxxxxxxxxxxxx"
+            env: cloudConfig.env
         });
 
 
@@ -162,8 +168,8 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                         this.state.loading ? <div>Loading...</div> : this.state.list ? this.state.list.map((post, key) => {
                             return (
                                 <div className="item" key={key}>
-                                    <p>{key+1}. {post.title} (第{this.state.page}页)</p>
-                                    <div className="item-img"></div>
+                                    <p>{key+1}. {post.title}</p>
+                                    <div className="item-img"><Image mode="widthFix" src={post.avatar} style='width: 100%;'/></div>
                                 </div>
                                 
                             )

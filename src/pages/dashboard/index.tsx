@@ -2,6 +2,8 @@ import React, { Component, PropsWithChildren } from 'react';
 import Taro from '@tarojs/taro';
 import { Button } from '@tarojs/components';
 import apiUrls from '@/config/apiUrls';
+import cloudConfig from '@/config/cloudConfig';
+
 import CustomButton from '@/components/Buttons';
 
 import './index.scss';
@@ -11,6 +13,7 @@ import imgAvatar from '@/assets/images/avatar.png';
 
 type PageState = {
     userAuthInfo?: any | null;
+    sessionExpired?: boolean;
 };
 
 export default class Index extends Component<PropsWithChildren, PageState> {
@@ -18,7 +21,8 @@ export default class Index extends Component<PropsWithChildren, PageState> {
     constructor(props) {
         super(props);
         this.state = {
-            userAuthInfo: null
+            userAuthInfo: null,
+            sessionExpired: false
         }
 
         this.getUserAuthInfo = this.getUserAuthInfo.bind(this);
@@ -30,15 +34,35 @@ export default class Index extends Component<PropsWithChildren, PageState> {
     sysInfo: any = Taro.getSystemInfoSync();  // 获取调试环境的信息
 
 
-    getOpenID(callback: any = false) {
+    getOpenID(userInfo: any = false, callback: any = false) {
 
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-        /* +++++++++++++++ 使用H5测试  start +++++++++++++++  */
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
+        const self = this;
+
+        //更新最新的用户数据
+        if ( userInfo !== false ) {
+            Taro.setStorage({
+                key: 'DATA_SESSION_USERINFO',
+                data: userInfo
+            });
+
+        }
+
+        
+        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+         * # 使用H5测试  start   
+         * 注意：
+         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/sql-conn.php 数据库配置
+         * 2) 请检查请求的测试地址 (外网URL或者localhost是否通畅)
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
         if (process.env.NODE_ENV === 'development') {
 
-            const res = {errMsg: 'ok', code: 'apptestopenid0001'}
+            const res = { errMsg: 'ok', code: 'apptestopenid0001' }
             console.log("Taro.login() result: ", res);
+
+            self.setState({
+                sessionExpired: false
+            });
+    
 
             if (res.code) {
                 //
@@ -55,9 +79,9 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
             return;
         }
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-        /* +++++++ 使用H5 或者 小程序开发者工具测试  end +++++++ */
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
+        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+         * # 使用H5测试  end   
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 
 
 
@@ -72,6 +96,10 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 // {errMsg: "login:ok", code: "the code is a mock one"}
                 console.log("Taro.login() result: ", res);
 
+                self.setState({
+                    sessionExpired: false
+                });
+        
                 if (res.code) {
                     //
                     Taro.setStorage({
@@ -90,9 +118,12 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
     databaseForUserInfo(obj: any = false, openid: any = false, callback: any = false) {
 
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-        /* +++++++++++++++ 使用H5测试  start +++++++++++++++  */
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
+        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+         * # 使用H5测试  start   
+         * 注意：
+         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/sql-conn.php 数据库配置
+         * 2) 请检查请求的测试地址 (外网URL或者localhost是否通畅)
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
         if (process.env.NODE_ENV === 'development') {
 
             let _data = obj !== false ? {
@@ -125,24 +156,21 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
                     callback.call(null, res.data.data);
                 },
-                fail: function (res: any) {}
+                fail: function (res: any) { }
 
-            });   
+            });
 
             return;
         }
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-        /* +++++++ 使用H5 或者 小程序开发者工具测试  end +++++++ */
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
 
+        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+         * # 使用H5测试  end   
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 
         Taro.cloud.callContainer({
             path: '/user.php', // 填入容器的访问路径
             method: 'POST',
-            header: {
-                "X-WX-SERVICE": "express-7bh9",
-                "content-type": "application/json"
-            },
+            header: cloudConfig.callContainerHeader,
             data: {
                 //得到登录用户的临时 code (小程序返回，通常请只需要传入它即可，其他字段根据业务需求决定)
                 code: openid,
@@ -177,15 +205,19 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
 
     getUserAuthInfo() {
- 
+
         const self = this;
 
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-        /* +++++++++++++++ 使用H5测试  start +++++++++++++++  */
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
+
+        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+         * # 使用H5测试  start   
+         * 注意：
+         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/sql-conn.php 数据库配置
+         * 2) 请检查请求的测试地址 (外网URL或者localhost是否通畅)
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
         if (process.env.NODE_ENV === 'development') {
 
-            //更新最新的用户数据
+            //用户数据
             const _userInfo = {
                 nickName: '用户昵称0001',
                 gender: 1,
@@ -195,14 +227,8 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 avatarUrl: imgAvatar
             };
 
-            //更新最新的用户数据
-            Taro.setStorage({
-                key: 'DATA_SESSION_USERINFO',
-                data: _userInfo
-            });
-
             // 保存 OPENID, 并比对数据库用户是否存在
-            self.getOpenID( function( id ) {
+            self.getOpenID( _userInfo, function (id) {
 
                 self.databaseForUserInfo(_userInfo, id, function (response) {
 
@@ -219,10 +245,10 @@ export default class Index extends Component<PropsWithChildren, PageState> {
             });
 
         }
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-        /* +++++++ 使用H5 或者 小程序开发者工具测试  end +++++++ */
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-
+        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+         * # 使用H5测试  end   
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+        
 
 
         // 注意：getUserProfile 只能由用户 TAP 手势调用
@@ -236,28 +262,24 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                     duration: 2000,
                     success: function () {
 
-                    //更新最新的用户数据
-                    const _userInfo = res.userInfo;
-                    Taro.setStorage({
-                        key: 'DATA_SESSION_USERINFO',
-                        data: _userInfo
-                    });
+                        //用户数据
+                        const _userInfo = res.userInfo;
 
-                    // 保存 OPENID, 并比对数据库用户是否存在
-                    self.getOpenID( function( id ) {
+                        // 保存 OPENID, 并比对数据库用户是否存在
+                        self.getOpenID(_userInfo, function (id) {
 
-                        self.databaseForUserInfo(_userInfo, id, function (response) {
+                            self.databaseForUserInfo(_userInfo, id, function (response) {
 
-                            if (response !== false) {
+                                if (response !== false) {
 
-                                self.setState({
-                                    userAuthInfo: _userInfo
-                                });
+                                    self.setState({
+                                        userAuthInfo: _userInfo
+                                    });
 
 
-                            }
+                                }
+                            });
                         });
-                    });
 
                     }
                 });
@@ -285,9 +307,12 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         const self = this;
 
 
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-        /* +++++++++++++++ 使用H5测试  start +++++++++++++++  */
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
+        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+         * # 使用H5测试  start   
+         * 注意：
+         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/sql-conn.php 数据库配置
+         * 2) 请检查请求的测试地址 (外网URL或者localhost是否通畅)
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
         if (process.env.NODE_ENV === 'development') {
 
             console.log('用户已经登录, 未过期的session_key');
@@ -297,10 +322,10 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 key: 'DATA_SESSION_LOGGED',
                 success: function (res) {
                     const _openid = res.data;
-                
+
                     self.databaseForUserInfo(false, _openid, function (response) {
 
-                        console.log('componentWillMount() response: ', response);
+                        console.log('Taro.checkSession() response: ', response);
 
                         if (response !== false) {
                             self.setState({
@@ -315,21 +340,33 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                             });
                         }
                     });
-   
-                    
+
+
+                },
+                fail: function () {
+                    console.log('session_key已经过期或者从未登录，重新登录(需要用户重新点击授权获取资料)');
+
+                    self.setState({
+                        userAuthInfo: null,
+                        sessionExpired: true
+                    });
+        
                 }
             });
 
             return;
         }
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
-        /* ++++++++++++++++ 使用H5测试  end ++++++++++++++++  */
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++  */
 
+        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+         * # 使用H5测试  end   
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+
+
+        
         // 下面的参数配置请参考小程序云部署后的参考代码
         // 注意：不能使用测试的appid, 需要使用正式申请的小程序ID才能正确请求云部署的文件
         Taro.cloud.init({
-            env: "prod-xxxxxxxxxxxxxxxxx"
+            env: cloudConfig.env
         });
 
 
@@ -347,8 +384,8 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
                         self.databaseForUserInfo(false, _openid, function (response) {
 
-                            console.log('componentWillMount() response: ', response);
-    
+                            console.log('Taro.checkSession() response: ', response);
+
                             if (response !== false) {
                                 self.setState({
                                     userAuthInfo: {
@@ -360,27 +397,32 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                                         avatarUrl: response.userinfo.avatar
                                     }
                                 });
-    
+
                             }
                         });
-       
+
                     }
                 });
 
             },
             fail() {
 
+                console.log('session_key已经过期或者从未登录，重新登录(需要用户重新点击授权获取资料)');
 
+                self.setState({
+                    userAuthInfo: null,
+                    sessionExpired: true
+                });
 
             }
-        })
+        });
 
 
     }
 
-    componentDidMount() {}
+    componentDidMount() { }
 
-    componentWillUnmount() {}
+    componentWillUnmount() { }
 
     componentDidShow() { }
 
@@ -389,20 +431,23 @@ export default class Index extends Component<PropsWithChildren, PageState> {
     render() {
 
         return (
+
             <div className="wrapper">
 
                 <div className="page-title">我的</div>
+                {this.state.sessionExpired ? <div className="page-desc"><div className="at-article__info">登录已过期或者未登录过应用，需要重新授权！</div></div> : null}
 
                 <div className="dashboard">
                 
                     <div><CustomButton className='btn-max-w' plain type='primary' btnName='上传图片' href={`/pages/upload/index`} /></div>
                     <div>
+
                         {this.state.userAuthInfo ? <div>
                             <img style={{ width: '50px', height: '50px' }} src={this.state.userAuthInfo.avatarUrl} />
                             <p>{this.state.userAuthInfo.nickName}</p>
                         </div> : <div>
-                            <Button className='btn-max-w app-btn-s1' type='primary' onClick={this.getUserAuthInfo}>授权获取头像和姓名</Button>
-                        </div>} 
+                            <Button className='btn-max-w app-btn-s1' type='primary' onClick={this.getUserAuthInfo}>授权获取用户头像和姓名</Button>
+                        </div>}
 
                     </div>
                     
