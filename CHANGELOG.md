@@ -1,8 +1,13 @@
 # Changelog
 
-#### = 1.1.3 (December 9, 2022) =
 
+
+#### = 1.1.4 (December 9, 2022) =
+
+* fix: Fix the problem of openid acquisition.
 * fix: Fixed formatting functionality for cloud-hosted files.
+* new: Added sharing function.
+* tweak: Logout button adds confirm dialog.
 
 
 #### = 1.1.2 (December 8, 2022) =

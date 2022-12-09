@@ -5,6 +5,7 @@ import apiUrls from '@/config/apiUrls';
 import cloudConfig from '@/config/cloudConfig';
 
 import CustomButton from '@/components/Buttons';
+import { AtModal } from "taro-ui";
 
 import './index.scss';
 
@@ -14,6 +15,7 @@ import imgAvatar from '@/assets/images/avatar.png';
 type PageState = {
     userAuthInfo?: any | null;
     sessionExpired?: boolean;
+    logoutModalOpen?: boolean;
 };
 
 export default class Index extends Component<PropsWithChildren, PageState> {
@@ -22,12 +24,14 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         super(props);
         this.state = {
             userAuthInfo: null,
-            sessionExpired: false
+            sessionExpired: false,
+            logoutModalOpen: false
         }
 
         this.getUserAuthInfo = this.getUserAuthInfo.bind(this);
         this.databaseForUserInfo = this.databaseForUserInfo.bind(this);
         this.getOpenID = this.getOpenID.bind(this);
+        this.logoutConfirm = this.logoutConfirm.bind(this);
         this.logout = this.logout.bind(this);
     }
 
@@ -35,10 +39,17 @@ export default class Index extends Component<PropsWithChildren, PageState> {
     sysInfo: any = Taro.getSystemInfoSync();  // 获取调试环境的信息
 
 
+    logoutConfirm() {
+        this.setState({
+            logoutModalOpen: true
+        });
+    }
+
     logout() {
         this.setState({
             userAuthInfo: null,
-            sessionExpired: true
+            sessionExpired: true,
+            logoutModalOpen: false
         });
 
         Taro.removeStorageSync('DATA_SESSION_LOGGED');
@@ -46,7 +57,6 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
         //跳转页面
         Taro.redirectTo({ url: "/pages/index/index" });
-
     }
 
     getOpenID(userInfo: any = false, callback: any = false) {
@@ -71,26 +81,20 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
         if (process.env.NODE_ENV === 'development') {
 
-            const res = { errMsg: 'ok', code: 'apptestopenid0003' }
-            console.log("Taro.login() result: ", res);
+            console.log("Taro.login() ok");
 
+            const _openid = 'openi-test-0001';
             self.setState({
                 sessionExpired: false
             });
 
+            //
+            Taro.setStorage({
+                key: 'DATA_SESSION_LOGGED',
+                data: _openid
+            });
 
-            if (res.code) {
-                //
-                Taro.setStorage({
-                    key: 'DATA_SESSION_LOGGED',
-                    data: res.code
-                });
-
-                callback.call(null, res.code);
-
-            } else {
-                console.log('登录失败！' + res.errMsg);
-            }
+            callback.call(null, _openid);
 
             return;
         }
@@ -109,20 +113,43 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
                 // 请注意如果没有使用申请的测试AppID，调用 Taro.login 是受限的, API 的返回是工具的模拟返回
                 // {errMsg: "login:ok", code: "the code is a mock one"}
-                console.log("Taro.login() result: ", res);
+                console.log("Taro.login() ok");
 
                 self.setState({
                     sessionExpired: false
                 });
 
                 if (res.code) {
-                    //
-                    Taro.setStorage({
-                        key: 'DATA_SESSION_LOGGED',
-                        data: res.code
+
+                    // 通过5分钟有效期的登录凭证获取用户的openid
+                    Taro.cloud.callContainer({
+                        path: cloudConfig.OPENID_REQUEST,
+                        method: 'POST',
+                        header: cloudConfig.callContainerHeader,
+                        data: {code: res.code},
+                    }).then(res => {
+            
+                        if (res.statusCode !== 200) {
+                            callback.call(null, false);
+                            return;
+                        }
+            
+                        //保存openid
+                        const _openid = res.data.data.openid;
+                        Taro.setStorage({
+                            key: 'DATA_SESSION_LOGGED',
+                            data: _openid
+                        });
+
+                        callback.call(null, _openid);
+            
+            
+                    }).catch(err => {
+                        Taro.showLoading({ title: '后端服务重启中' });
+                        console.log(err);
                     });
 
-                    callback.call(null, res.code);
+
 
                 } else {
                     console.log('登录失败！' + res.errMsg);
@@ -257,7 +284,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
         // 注意：getUserProfile 只能由用户 TAP 手势调用
         Taro.getUserProfile({
-            desc: '获取你的昵称、头像、地区及性别', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+            desc: '获取您的昵称和头像', // getUserProfile接口已经被收回，只返回灰色头像和固定名称
             success: (res) => {
 
                 Taro.showToast({
@@ -449,6 +476,17 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         return (
 
             <div className="wrapper">
+
+                <AtModal
+                    isOpened={this.state.logoutModalOpen ? true : false}
+                    title='退出'
+                    cancelText='取消'
+                    confirmText='确认'
+                    onClose={() => this.setState({logoutModalOpen: false})}
+                    onCancel={() => this.setState({logoutModalOpen: false})}
+                    onConfirm={this.logout}
+                    content='退出后将删除用户授权信息，下次重新授权后可恢复收藏条目'
+                />
 
                 <div className="page-title">我的 {this.state.userAuthInfo ? <small style={{ color: 'gray', fontSize: '.7em' }} onClick={this.logout}>退出</small> : null}</div>
 

@@ -19,6 +19,8 @@ const config = {
     ------------------------------------------
     */
     "LOGIN_REQUEST": "http://127.0.0.1:8888/fullstack-taro-app-template/cloud-hosting/miniprogram-deploy-package/user.php",
+    "OPENID_REQUEST": "http://127.0.0.1:8888/fullstack-taro-app-template/cloud-hosting/miniprogram-deploy-package/user-identity.php",
+
 
     /*
     TYPE: User operations

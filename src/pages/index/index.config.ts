@@ -1,3 +1,8 @@
 export default definePageConfig({
-  navigationBarTitleText: '首页'
-})
+    navigationBarTitleText: 'Full-Stack Taro Application Template',
+  
+    //启用分享功能
+    enableShareAppMessage: true,
+    enableShareTimeline: true
+  })
+  

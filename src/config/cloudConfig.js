@@ -17,6 +17,7 @@ const config = {
     ------------------------------------------
     */
     "LOGIN_REQUEST": "/user.php",
+    "OPENID_REQUEST": "/user-identity.php",
 
 
     /*
