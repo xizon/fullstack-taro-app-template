@@ -35,7 +35,7 @@ function html_decode($str) {
 
 /**
  * Replaces double line breaks with paragraph elements.
- * @See WordPress' wpautop()
+ * @refer to WordPress' wpautop()
  */
 function appAutoP( $text, $br = true ) {
 	$pre_tags = array();
@@ -46,6 +46,9 @@ function appAutoP( $text, $br = true ) {
 
 	// Just to make things a little easier, pad the end.
 	$text = $text . "\n";
+
+    // Replace multiple newlines, tabs, and spaces 
+    $text = preg_replace("/(\r?\n){2,}/", "<WPPreserveNewline />", $text);
 
 	// Change multiple <br>'s into two line breaks, which will turn into paragraphs.
 	$text = preg_replace( '|<br\s*/?>\s*<br\s*/?>|', "\n\n", $text );
@@ -142,7 +145,7 @@ function appAutoP( $text, $br = true ) {
 		$text = preg_replace( '|(?<!<br />)\s*\n|', "<br />\n", $text );
 
 		// Replace newline placeholders with newlines.
-		$text = str_replace( '<WPPreserveNewline />', "\n", $text );
+		$text = str_replace( '<WPPreserveNewline />', "<p>#nbsp#</p>", $text );
 	}
 
 	// If a <br /> tag is after an opening or closing block tag, remove it.

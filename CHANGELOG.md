@@ -1,5 +1,9 @@
 # Changelog
 
+#### = 1.1.3 (December 9, 2022) =
+
+* fix: Fixed formatting functionality for cloud-hosted files.
+
 
 #### = 1.1.2 (December 8, 2022) =
 
