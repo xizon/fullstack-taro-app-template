@@ -1,6 +1,11 @@
 # Changelog
 
 
+#### = 1.1.5 (December 12, 2022) =
+
+* tweak:Use <ScrollView> to avoid multiple scrollbars.
+* tweak:upload limit problem.
+
 
 #### = 1.1.4 (December 9, 2022) =
 

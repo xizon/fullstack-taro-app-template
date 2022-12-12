@@ -18,7 +18,7 @@ export default class Index extends Component<PropsWithChildren> {
 
     render() {
         return (
-            <div className="wrapper">
+            <div className="wrapper wrapper--normal">
                 <div className='at-article'>
                     <div className='at-article__content'>
                         <div className='at-article__section'>

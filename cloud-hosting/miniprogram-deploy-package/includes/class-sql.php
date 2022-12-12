@@ -104,7 +104,7 @@ $sql_db->create_table("users_app", "
     pw         VARCHAR(255),
     email      VARCHAR(255),
     nickname   VARCHAR(100) DEFAULT 'Anonymous',
-    avatar     VARCHAR(255),
+    avatar     TEXT,
     intro      TEXT,
     tel        VARCHAR(100),
     address    VARCHAR(255),

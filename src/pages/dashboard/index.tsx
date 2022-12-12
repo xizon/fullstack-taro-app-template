@@ -14,7 +14,6 @@ import imgAvatar from '@/assets/images/avatar.png';
 
 type PageState = {
     userAuthInfo?: any | null;
-    sessionExpired?: boolean;
     logoutModalOpen?: boolean;
 };
 
@@ -24,7 +23,6 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         super(props);
         this.state = {
             userAuthInfo: null,
-            sessionExpired: false,
             logoutModalOpen: false
         }
 
@@ -48,7 +46,6 @@ export default class Index extends Component<PropsWithChildren, PageState> {
     logout() {
         this.setState({
             userAuthInfo: null,
-            sessionExpired: true,
             logoutModalOpen: false
         });
 
@@ -84,10 +81,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
             console.log("Taro.login() ok");
 
             const _openid = 'openi-test-0001';
-            self.setState({
-                sessionExpired: false
-            });
-
+    
             //
             Taro.setStorage({
                 key: 'DATA_SESSION_LOGGED',
@@ -115,9 +109,6 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 // {errMsg: "login:ok", code: "the code is a mock one"}
                 console.log("Taro.login() ok");
 
-                self.setState({
-                    sessionExpired: false
-                });
 
                 if (res.code) {
 
@@ -388,8 +379,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                     console.log('session_key已经过期或者从未登录，重新登录(需要用户重新点击授权获取资料)');
 
                     self.setState({
-                        userAuthInfo: null,
-                        sessionExpired: true
+                        userAuthInfo: null
                     });
 
                 }
@@ -451,8 +441,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 console.log('session_key已经过期或者从未登录，重新登录(需要用户重新点击授权获取资料)');
 
                 self.setState({
-                    userAuthInfo: null,
-                    sessionExpired: true
+                    userAuthInfo: null
                 });
 
             }
@@ -490,7 +479,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
                 <div className="page-title">我的 {this.state.userAuthInfo ? <small style={{ color: 'gray', fontSize: '.7em' }} onClick={this.logout}>退出</small> : null}</div>
 
-                {this.state.sessionExpired ? <div className="page-desc"><div className="at-article__info">登录已过期或者未登录过应用，需要重新授权！</div></div> : null}
+                { !this.state.userAuthInfo ? <div className="page-desc"><div className="at-article__info">登录已过期或者未登录过应用，需要重新授权！</div></div> : null}
 
                 <div className="dashboard">
 

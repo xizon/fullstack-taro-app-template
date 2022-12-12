@@ -150,7 +150,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
     render() {
         return (
-            <div className="wrapper">
+            <div className="wrapper wrapper--hasScrollView">
 
                 <div className="page-title">文章列表</div>
 

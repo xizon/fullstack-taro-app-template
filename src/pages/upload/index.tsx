@@ -53,9 +53,25 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 //图片地址
                 let imagePath = tempFilePaths[0];
 
+                //图片大小(不能超过50K)
+                const imageSize = Math.ceil(res.tempFiles[0].size/1000);
+                if ( imageSize >= 50 ) {
+                    Taro.showToast({
+                        title: '图片不能超过50K',
+                        icon: 'error',
+                        duration: 2000
+                    });
+                    return;
+                }
+
+
+
                 //图片转base64
                 self.imgConvertBase64(imagePath).then(res => {
                     self.setState({ imageInfo: res });
+
+                    //存储到数据库
+                    //...
 
                 });
 
