@@ -80,7 +80,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
             console.log("Taro.login() ok");
 
-            const _openid = 'openi-test-0001';
+            const _openid = 'openi-test-0007';
     
             //
             Taro.setStorage({
@@ -149,12 +149,16 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         });
     }
 
-    databaseForUserInfo(obj: any = false, openid: any = false, callback: any = false) {
+    databaseForUserInfo(updateVal = 0, obj: any = false, openid: any = false, callback: any = false) {
+
+        //!!!!!
+        // 注意：只有使用修改头像，昵称等操作时，才将 updateVal 的值设为 1
+        //!!!!
 
         const _data = obj !== false ? {
             //得到登录用户的临时 code (小程序返回，通常请只需要传入它即可，其他字段根据业务需求决定)
             code: openid,
-            update: 1,
+            update: updateVal,
 
             //用户的其它资料，同步更新到数据库
             nickname: obj.nickName,
@@ -163,7 +167,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
             province: obj.province,
             country: obj.country,
             avatar: obj.avatarUrl
-        } : { code: openid, update: 0 };
+        } : { code: openid, update: updateVal };
 
 
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
@@ -252,13 +256,20 @@ export default class Index extends Component<PropsWithChildren, PageState> {
             // 保存 OPENID, 并比对数据库用户是否存在
             self.getOpenID(_userInfo, function (id) {
 
-                self.databaseForUserInfo(_userInfo, id, function (response) {
+                self.databaseForUserInfo(0, _userInfo, id, function (response) {
 
                     console.log('getUserAuthInfo() response: ', response);
                     if (response !== false) {
 
                         self.setState({
-                            userAuthInfo: _userInfo
+                            userAuthInfo: {
+                                nickName: response.userinfo.nickname,
+                                gender: response.userinfo.gender,
+                                city: response.userinfo.city,
+                                province: response.userinfo.province,
+                                country: response.userinfo.country,
+                                avatarUrl: response.userinfo.avatar
+                            }
                         });
 
 
@@ -290,13 +301,20 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                         // 保存 OPENID, 并比对数据库用户是否存在
                         self.getOpenID(_userInfo, function (id) {
 
-                            self.databaseForUserInfo(_userInfo, id, function (response) {
+                            self.databaseForUserInfo(0, _userInfo, id, function (response) {
 
                                 console.log('getUserAuthInfo() response: ', response);
                                 if (response !== false) {
 
                                     self.setState({
-                                        userAuthInfo: _userInfo
+                                        userAuthInfo: {
+                                            nickName: response.userinfo.nickname,
+                                            gender: response.userinfo.gender,
+                                            city: response.userinfo.city,
+                                            province: response.userinfo.province,
+                                            country: response.userinfo.country,
+                                            avatarUrl: response.userinfo.avatar
+                                        }
                                     });
 
 
@@ -355,7 +373,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 success: function (res) {
                     const _openid = res.data;
 
-                    self.databaseForUserInfo(false, _openid, function (response) {
+                    self.databaseForUserInfo(0, false, _openid, function (response) {
 
                         console.log('Taro.checkSession() response: ', response);
 
@@ -413,7 +431,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
                         const _openid = res.data;
 
-                        self.databaseForUserInfo(false, _openid, function (response) {
+                        self.databaseForUserInfo(0, false, _openid, function (response) {
 
                             console.log('Taro.checkSession() response: ', response);
 
@@ -477,7 +495,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                     content='退出后将删除用户授权信息，下次重新授权后可恢复收藏条目'
                 />
 
-                <div className="page-title">我的 {this.state.userAuthInfo ? <small style={{ color: 'gray', fontSize: '.7em' }} onClick={this.logout}>退出</small> : null}</div>
+                <div className="page-title">我的 {this.state.userAuthInfo ? <small style={{ color: 'gray', fontSize: '.7em' }} onClick={this.logoutConfirm}>退出</small> : null}</div>
 
                 { !this.state.userAuthInfo ? <div className="page-desc"><div className="at-article__info">登录已过期或者未登录过应用，需要重新授权！</div></div> : null}
 
