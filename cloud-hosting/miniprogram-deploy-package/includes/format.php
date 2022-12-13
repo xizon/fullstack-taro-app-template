@@ -162,9 +162,9 @@ function appAutoP( $text, $br = true ) {
 
 
     //spacing
-    $text = str_replace('  ', '#nbsp##nbsp#', $text );
+    $text = str_replace('  ', '　', $text );
 
-    //<p>
+    //
     $text = str_replace('<p>', '#viewstart#', $text );
     $text = str_replace('</p>', '#viewend#', $text );
     $text = str_replace('<br />', '#viewstart##viewend#', $text );
