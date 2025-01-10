@@ -26,12 +26,12 @@ List my progress here:
 | File System (for image) | ✔ |
 | Link Jump | ✔ |
 | Scroll Trigger | ✔ |
-| Canvas | ✔ |
 | HTML5 Tags | ✔ |
 | DragDrop (for uploaded image) | ✔ |
 | Pagination | ✔ |
 | Cloud Hosting | ✔ |
 | WebView | ✔ |
+| Canvas | ✔ |
 | Basic Taro-UI | ✔ |
 | CURD | ✔ |
 | Authority Diagnosis | ✔ |
@@ -99,14 +99,35 @@ $ cd /{your_directory}/fullstack-taro-app-template
 $ sudo npm install
 ```
 
-**Step 4.** Test the application, such as the command
+**Step 4.** Database connection
+
+a) Save and write local test data. First build a `PHP` local server and use the following information to ensure database connection
+
+```sh
+hostname='localhost';
+username='mm';
+password='mm';
+database='test1';
+```
+
+b) Use a browser to run the following address to generate a table
+
+```sh
+http://127.0.0.1:8888/fullstack-taro-app-template/cloud-hosting/miniprogram-deploy-package/sql-init.php
+```
+
+c) Use the collection function to operate data storage
+
+Enter My, click Login, and then you can use the collection function.
+
+**Step 5.** Test the application, such as the command
 
 ```sh
 $ npm run dev:h5
 $ npm run build:h5
 ```
 
-**Step 5 (Optional).** Unit Testing
+**Step 6 (Optional).** Unit Testing
 
 ```sh
 $ npm run test
@@ -138,6 +159,40 @@ $ sudo taro init
 ```
 
 ## FAQs
+
+
+### ⚙️ When importing pictures, in order to prevent the editor (VS Code) from reporting errors:
+
+Create a declaration file `global.d.ts` to `src/` for image resources:
+
+```js
+declare module '*.png' {
+    const value: string;
+    export default value;
+}
+declare module '*.jpg' {
+    const value: string;
+    export default value;
+}
+declare module '*.jpeg' {
+    const value: string;
+    export default value;
+}
+declare module '*.svg' {
+    const value: string;
+    export default value;
+}
+declare module '*.gif' {
+    const value: string;
+    export default value;
+}
+declare module '*.webp' {
+    const value: string;
+    export default value;
+}
+```
+
+
 
 ### ⚙️ To use an alias or other custom configuration, modify the following files:
 
@@ -230,6 +285,19 @@ babel.config.js
 
 
 
+
+### ❌ ERROR: `@import rules are deprecated and will be removed in Dart Sass 3.0.0.` or `ERROR in ./src/app.scss ... Undefined variable.`
+
+Solution:
+
+Downgrade the stable version of SASS
+
+```sh
+$ npm uninstall sass
+$ npm install sass@1.54.5 --save-dev
+```
+
+
 ### ❌ ERROR: `[object Object] is not a PostCSS plugin Error: pages/index/index.wxss from Css Minimizer plugin`
 
 Solution:
@@ -285,7 +353,8 @@ babel.config.js
 
 ## Supported development environment
 
-- Taro 3.5.* +
+- Taro 4.0.8 +
+- nutui 2.7.5 +
 - React 18 +
 
 

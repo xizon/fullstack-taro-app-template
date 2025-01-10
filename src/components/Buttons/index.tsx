@@ -4,7 +4,8 @@
  *************************************
  */
 import React from 'react';
-import { Button } from '@tarojs/components';
+import { View } from '@tarojs/components'
+import { Button } from '@nutui/nutui-react-taro'
 import Taro from '@tarojs/taro';
 
 /*-- Apply this component styles --*/
@@ -33,19 +34,19 @@ export default function CustomButton(props: ButtonProps) {
 
 
     return (
-        <div>
+        <>
 
             {href ? (
-                <Button onClick={(e) => navigateTo(e, href)} {...attributes}>
+                <Button type='primary' onClick={(e) => navigateTo(e, href)} {...attributes}>
                     {btnName || 'Default'}
                 </Button>
             ) : (
-                <Button {...attributes}>
+                <Button type='primary' {...attributes}>
                     {btnName || 'Default'}
                 </Button>
             )}
 
-        </div>
+        </>
     )
 
 }

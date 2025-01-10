@@ -1,5 +1,7 @@
 <?php
-error_reporting(E_ALL ^ E_NOTICE);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 date_default_timezone_set('PRC');
 //容错处理
 error_reporting(0);

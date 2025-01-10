@@ -1,4 +1,5 @@
-import React, { Component, PropsWithChildren } from 'react';
+import React, { useEffect } from 'react'
+import { useDidShow, useDidHide } from '@tarojs/taro'
 import { Provider } from 'react-redux';
 import '@/app.scss';
 
@@ -6,22 +7,23 @@ import '@/app.scss';
 import configureStore from '@/status/store/createStore';
 const store = configureStore();
 
-class App extends Component<PropsWithChildren> {
 
-    componentDidMount() { }
 
-    componentDidShow() { }
+function App(props) {
+    // 可以使用所有的 React Hooks
+    useEffect(() => { })
 
-    componentDidHide() { }
+    // 对应 onShow
+    useDidShow(() => { })
 
-    render() {
-        // this.props.children 是将要会渲染的页面
-        return (
-            <Provider store={store}>
-                { this.props.children }
-            </Provider>
-          )
-    }
+    // 对应 onHide
+    useDidHide(() => { })
+
+    return (
+        <Provider store={store}>
+            {props.children}
+        </Provider>
+    )
 }
 
 export default App

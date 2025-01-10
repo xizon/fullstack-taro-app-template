@@ -1,5 +1,11 @@
 # Changelog
 
+#### = 1.2.0 (January 8, 2025) =
+
+* tweak: upgraded tarojs to 4.0.8
+* tweak: remove taro-ui, add nutui
+* refactor: Refactoring with hooks
+
 
 #### = 1.1.6 (December 12, 2022) =
 
@@ -30,6 +36,7 @@
 
 * new: Import taro-ui-base.
 * tweak: Change the Counter to Favorite demo.
+
 
 
 #### = 1.0.5 (December 4, 2022) =

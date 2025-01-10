@@ -1,34 +1,23 @@
-import React, { Component, PropsWithChildren } from 'react';
+import React, { useState, useEffect} from 'react'
 import Taro from '@tarojs/taro';
-import { ScrollView, Image } from '@tarojs/components';
+import { View, ScrollView } from '@tarojs/components';
 import apiUrls from '@/config/apiUrls';
+import { Image } from '@nutui/nutui-react-taro'
 
-import './index.scss';
+import './index.scss'
+function Index() {
 
-type PageState = {
-    loading?: boolean;
-    list?: any[] | null;
-};
+    const [loading, setLoading] = useState<boolean>(false);
+    const [list, setList] = useState<any[]>([]);
 
-export default class Index extends Component<PropsWithChildren, PageState> {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            loading: true,
-            list: []
-        }
-    }
-
-    linkTo = (e, url) => {
+    const linkTo = (e, url) => {
         e.preventDefault();
         Taro.navigateTo({ url: url });
-    }
+    };
 
-    // getList = () => { ... }
-    getList() {   
-        const self = this;
-        this.setState({ loading: true });
+    const getList = () => {   
+  
+        setLoading(true);
         Taro.showLoading({ title: '加载中' })
 
         Taro.request({
@@ -42,49 +31,34 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 console.log(res);
 
                 if ( res.statusCode !== 200 ) {
-                    self.setState({
-                        loading: false,
-                        list: []
-                    });
+                    setLoading(false);
+                    setList([]);
                     return;      
                 }
 
-                self.setState({
-                    loading: false,
-                    list: res.data
-                });
+                setLoading(false);
+                setList(res.data);
 
 
             }
         });
 
-    }
+    };
 
-
-    onScroll(e) {
+    const onScroll = (e) => {
         //console.log(e.detail);   // {scrollLeft: 0, scrollTop: 66, scrollHeight: 11544, scrollWidth: 375}, ...
-    }
+    };
 
 
-    componentWillMount() { }
-
-    componentDidMount() {
-
+    useEffect(() => {
         //初始化远程数据
-        this.getList();
-    }
+        getList();
+    }, []);
 
-    componentWillUnmount() { }
+    return (
+        <View className="wrapper wrapper--hasScrollView">
 
-    componentDidShow() { }
-
-    componentDidHide() { }
-
-    render() {
-        return (
-            <div className="wrapper wrapper--hasScrollView">
-
-                <div className="page-title">文章列表</div>
+                <View className="page-title">文章列表</View>
 
                 <ScrollView className="scrollview"
                     scrollY
@@ -92,24 +66,27 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                     scrollTop={0}
                     lowerThreshold={20}
                     upperThreshold={20}
-                    onScrollToUpper={this.getList.bind(this)} // 使用箭头函数的时候 可以这样写 `onScrollToUpper={this.getList()}`
-                    onScroll={this.onScroll}
+                    onScrollToUpper={getList} // 使用箭头函数的时候 可以这样写 `onScrollToUpper={this.getList()}`
+                    onScroll={onScroll}
                 >
 
                     {
-                        this.state.loading ? <div>Loading...</div> : this.state.list ? this.state.list.map((post, key) => {
+                        loading ? <View>Loading...</View> : list ? list.map((post, key) => {
                             return (
-                                <div className="item" key={key} onClick={(e) => this.linkTo(e, '/pages/post-detail/index?name=' + post.name)}>
-                                    <div><Image mode="widthFix" src={post.flag} style='width: 90%;'/></div>
+                                <View className="item" key={key} onClick={(e) => linkTo(e, '/pages/post-detail/index?name=' + post.name)}>
+                                    <View><Image mode="widthFix" src={post.flag} /></View>
                                     <p>{post.name}  - (region: {post.region})</p>
-                                </div>
+                                </View>
                             )
                         }) : null
                     }
                 </ScrollView>
 
 
-            </div>
-        )
-    }
+            </View>
+    )
 }
+
+export default Index
+
+

@@ -1,9 +1,14 @@
 {
-  "miniprogramRoot": "./",
-  "projectname": "fullstack-taro-app-template",
-  "appid": "testAppId",
-  "setting": {
-    "es6": false,
-    "minified": false
+    "miniprogramRoot": "./",
+    "projectname": "fullstack-taro-app-template",
+    "description": "This repository is a full-stack sample mini program based on Taro that creates a simple extended architecture.",
+    "appid": "touristappid",
+    "setting": {
+      "urlCheck": true,
+      "es6": false,
+      "postcss": false,
+      "minified": false
+    },
+    "compileType": "miniprogram"
   }
-}
+  

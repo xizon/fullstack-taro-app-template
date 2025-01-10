@@ -83,3 +83,11 @@ typings/
 
 # Webstorm Project
 .idea/
+
+
+# dist
+dist
+
+
+#
+.swc

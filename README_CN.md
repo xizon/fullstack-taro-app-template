@@ -27,12 +27,12 @@
 | 文件系统（针对图片） | ✔ |
 | 链接跳转 | ✔ |
 | 滑动触发器 | ✔ |
-| Canvas演示 | ✔ |
 | HTML5标签 | ✔ |
 | 拖拽移动（针对上传的图片） | ✔ |
 | 分页 | ✔ |
 | 云部署 | ✔ |
 | 嵌入远程页面 | ✔ |
+| 画布 | ✔ |
 | 基础的Taro-UI | ✔ |
 | 数据CURD | ✔ |
 | 权限判断 | ✔ |
@@ -102,20 +102,46 @@ $ cd /{your_directory}/fullstack-taro-app-template
 $ sudo npm install
 ```
 
-**Step 4.** 测试和打包应用的代码类似
+
+
+
+**Step 4.** 数据库连接
+
+a) 本地测试数据保存写入，先搭建 `PHP` 本地服务器，并使用下面的资料来保证数据库连接
+
+```sh
+hostname='localhost';
+username='mm';
+password='mm';
+database='test1';
+```
+
+
+b) 使用浏览器运行下面的地址，生成表
+
+```sh
+http://127.0.0.1:8888/fullstack-taro-app-template/cloud-hosting/miniprogram-deploy-package/sql-init.php
+```
+
+
+c) 使用收藏功能时即可操作数据存储
+
+进入我的，点击登录，然后即可使用收藏功能。
+
+
+
+**Step 5.** 测试和打包应用的代码类似
 
 ```sh
 $ npm run dev:h5
 $ npm run build:h5
 ```
 
-**Step 5 (可选).** 单元测试
+**Step 6 (可选).** 单元测试
 
 ```sh
 $ npm run test
 ```
-
-
 
 
 ## Taro开发环境配置流程
@@ -141,6 +167,38 @@ $ sudo taro init
 ```
 
 ## 其它常见问题
+
+
+### ⚙️ 导入图片时，为了让编辑器（VS Code）不报错的解决方案:
+
+创建一个全局生声明文件 `global.d.ts` 到 `src/` 处理图片资源:
+
+```js
+declare module '*.png' {
+    const value: string;
+    export default value;
+}
+declare module '*.jpg' {
+    const value: string;
+    export default value;
+}
+declare module '*.jpeg' {
+    const value: string;
+    export default value;
+}
+declare module '*.svg' {
+    const value: string;
+    export default value;
+}
+declare module '*.gif' {
+    const value: string;
+    export default value;
+}
+declare module '*.webp' {
+    const value: string;
+    export default value;
+}
+```
 
 
 ### ⚙️ 使用别名或者其他，修改以下文件:
@@ -234,7 +292,16 @@ babel.config.js
 
 
 
+### ❌ 报错: `@import rules are deprecated and will be removed in Dart Sass 3.0.0.` 或者 `ERROR in ./src/app.scss ... Undefined variable.`
 
+解决方案：
+
+降级稳定版的 SASS
+
+```sh
+$ npm uninstall sass
+$ npm install sass@1.54.5 --save-dev
+```
 
 
 ### ❌ 报错: `[object Object] is not a PostCSS plugin Error: pages/index/index.wxss from Css Minimizer plugin`
@@ -288,7 +355,8 @@ babel.config.js
 
 ## 支持的开发环境
 
-- Taro 3.5.* +
+- Taro 4.0.8 +
+- nutui 2.7.5 +
 - React 18 +
 
 

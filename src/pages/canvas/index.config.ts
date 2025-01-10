@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: 'Canvas'
+  navigationBarTitleText: '画布'
 })

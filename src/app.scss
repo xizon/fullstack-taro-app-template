@@ -1,9 +1,118 @@
 
 
-// 全局引入taro-ui样式(按需引入)
-// 使用JS导入可能会导致H5的单位不自动转换为em
-@import 'taro-ui/dist/style/components/article.scss'; 
 
+// 全局引入样式(按需引入)
+// 使用JS导入可能会导致H5的单位不自动转换为em
+
+// 自定义按钮组件主题
+$button-primary-background-color: #822dee;
+$button-primary-border-color: #822dee;
+
+
+// 引入变量文件
+@import '@nutui/nutui-react-taro/dist/styles/theme-default.scss';
+@import '@nutui/nutui-react-taro/dist/styles/variables.scss';
+@import '@nutui/nutui-react-taro/dist/packages/button/button.scss';
+@import '@nutui/nutui-react-taro/dist/packages/cell/cell.scss';
+@import '@nutui/nutui-react-taro/dist/packages/cellgroup/cellgroup.scss';
+@import '@nutui/nutui-react-taro/dist/packages/configprovider/configprovider.scss';
+@import '@nutui/nutui-react-taro/dist/packages/image/image.scss';
+@import '@nutui/nutui-react-taro/dist/packages/overlay/overlay.scss';
+@import '@nutui/nutui-react-taro/dist/packages/col/col.scss';
+@import '@nutui/nutui-react-taro/dist/packages/divider/divider.scss';
+@import '@nutui/nutui-react-taro/dist/packages/grid/grid.scss';
+@import '@nutui/nutui-react-taro/dist/packages/griditem/griditem.scss';
+@import '@nutui/nutui-react-taro/dist/packages/layout/layout.scss';
+@import '@nutui/nutui-react-taro/dist/packages/row/row.scss';
+@import '@nutui/nutui-react-taro/dist/packages/space/space.scss';
+@import '@nutui/nutui-react-taro/dist/packages/sticky/sticky.scss';
+@import '@nutui/nutui-react-taro/dist/packages/safearea/safearea.scss';
+@import '@nutui/nutui-react-taro/dist/packages/backtop/backtop.scss';
+@import '@nutui/nutui-react-taro/dist/packages/elevator/elevator.scss';
+@import '@nutui/nutui-react-taro/dist/packages/fixednav/fixednav.scss';
+@import '@nutui/nutui-react-taro/dist/packages/navbar/navbar.scss';
+@import '@nutui/nutui-react-taro/dist/packages/sidenavbar/sidenavbar.scss';
+@import '@nutui/nutui-react-taro/dist/packages/sidenavbaritem/sidenavbaritem.scss';
+@import '@nutui/nutui-react-taro/dist/packages/subsidenavbar/subsidenavbar.scss';
+@import '@nutui/nutui-react-taro/dist/packages/tabbar/tabbar.scss';
+@import '@nutui/nutui-react-taro/dist/packages/tabbaritem/tabbaritem.scss';
+@import '@nutui/nutui-react-taro/dist/packages/tabpane/tabpane.scss';
+@import '@nutui/nutui-react-taro/dist/packages/tabs/tabs.scss';
+@import '@nutui/nutui-react-taro/dist/packages/address/address.scss';
+@import '@nutui/nutui-react-taro/dist/packages/calendar/calendar.scss';
+@import '@nutui/nutui-react-taro/dist/packages/calendaritem/calendaritem.scss';
+@import '@nutui/nutui-react-taro/dist/packages/calendarcard/calendarcard.scss';
+@import '@nutui/nutui-react-taro/dist/packages/cascader/cascader.scss';
+@import '@nutui/nutui-react-taro/dist/packages/checkbox/checkbox.scss';
+@import '@nutui/nutui-react-taro/dist/packages/checkboxgroup/checkboxgroup.scss';
+@import '@nutui/nutui-react-taro/dist/packages/datepicker/datepicker.scss';
+@import '@nutui/nutui-react-taro/dist/packages/form/form.scss';
+@import '@nutui/nutui-react-taro/dist/packages/formitem/formitem.scss';
+@import '@nutui/nutui-react-taro/dist/packages/input/input.scss';
+@import '@nutui/nutui-react-taro/dist/packages/inputnumber/inputnumber.scss';
+@import '@nutui/nutui-react-taro/dist/packages/menu/menu.scss';
+@import '@nutui/nutui-react-taro/dist/packages/menuitem/menuitem.scss';
+@import '@nutui/nutui-react-taro/dist/packages/numberkeyboard/numberkeyboard.scss';
+@import '@nutui/nutui-react-taro/dist/packages/picker/picker.scss';
+@import '@nutui/nutui-react-taro/dist/packages/radio/radio.scss';
+@import '@nutui/nutui-react-taro/dist/packages/radiogroup/radiogroup.scss';
+@import '@nutui/nutui-react-taro/dist/packages/range/range.scss';
+@import '@nutui/nutui-react-taro/dist/packages/rate/rate.scss';
+@import '@nutui/nutui-react-taro/dist/packages/searchbar/searchbar.scss';
+@import '@nutui/nutui-react-taro/dist/packages/shortpassword/shortpassword.scss';
+@import '@nutui/nutui-react-taro/dist/packages/signature/signature.scss';
+@import '@nutui/nutui-react-taro/dist/packages/switch/switch.scss';
+@import '@nutui/nutui-react-taro/dist/packages/textarea/textarea.scss';
+@import '@nutui/nutui-react-taro/dist/packages/uploader/uploader.scss';
+@import '@nutui/nutui-react-taro/dist/packages/actionsheet/actionsheet.scss';
+@import '@nutui/nutui-react-taro/dist/packages/badge/badge.scss';
+@import '@nutui/nutui-react-taro/dist/packages/dialog/dialog.scss';
+@import '@nutui/nutui-react-taro/dist/packages/drag/drag.scss';
+@import '@nutui/nutui-react-taro/dist/packages/empty/empty.scss';
+@import '@nutui/nutui-react-taro/dist/packages/infiniteloading/infiniteloading.scss';
+@import '@nutui/nutui-react-taro/dist/packages/loading/loading.scss';
+@import '@nutui/nutui-react-taro/dist/packages/noticebar/noticebar.scss';
+@import '@nutui/nutui-react-taro/dist/packages/notify/notify.scss';
+@import '@nutui/nutui-react-taro/dist/packages/popover/popover.scss';
+@import '@nutui/nutui-react-taro/dist/packages/popup/popup.scss';
+@import '@nutui/nutui-react-taro/dist/packages/pulltorefresh/pulltorefresh.scss';
+@import '@nutui/nutui-react-taro/dist/packages/skeleton/skeleton.scss';
+@import '@nutui/nutui-react-taro/dist/packages/swipe/swipe.scss';
+@import '@nutui/nutui-react-taro/dist/packages/toast/toast.scss';
+@import '@nutui/nutui-react-taro/dist/packages/animate/animate.scss';
+@import '@nutui/nutui-react-taro/dist/packages/animatingnumbers/animatingnumbers.scss';
+@import '@nutui/nutui-react-taro/dist/packages/audio/audio.scss';
+@import '@nutui/nutui-react-taro/dist/packages/avatar/avatar.scss';
+@import '@nutui/nutui-react-taro/dist/packages/avatargroup/avatargroup.scss';
+@import '@nutui/nutui-react-taro/dist/packages/circleprogress/circleprogress.scss';
+@import '@nutui/nutui-react-taro/dist/packages/collapse/collapse.scss';
+@import '@nutui/nutui-react-taro/dist/packages/collapseitem/collapseitem.scss';
+@import '@nutui/nutui-react-taro/dist/packages/countdown/countdown.scss';
+@import '@nutui/nutui-react-taro/dist/packages/ellipsis/ellipsis.scss';
+@import '@nutui/nutui-react-taro/dist/packages/imagepreview/imagepreview.scss';
+@import '@nutui/nutui-react-taro/dist/packages/indicator/indicator.scss';
+@import '@nutui/nutui-react-taro/dist/packages/pagination/pagination.scss';
+@import '@nutui/nutui-react-taro/dist/packages/price/price.scss';
+@import '@nutui/nutui-react-taro/dist/packages/progress/progress.scss';
+@import '@nutui/nutui-react-taro/dist/packages/step/step.scss';
+@import '@nutui/nutui-react-taro/dist/packages/steps/steps.scss';
+@import '@nutui/nutui-react-taro/dist/packages/swiper/swiper.scss';
+@import '@nutui/nutui-react-taro/dist/packages/swiperitem/swiperitem.scss';
+@import '@nutui/nutui-react-taro/dist/packages/table/table.scss';
+@import '@nutui/nutui-react-taro/dist/packages/tag/tag.scss';
+@import '@nutui/nutui-react-taro/dist/packages/tour/tour.scss';
+@import '@nutui/nutui-react-taro/dist/packages/video/video.scss';
+@import '@nutui/nutui-react-taro/dist/packages/virtuallist/virtuallist.scss';
+@import '@nutui/nutui-react-taro/dist/packages/barrage/barrage.scss';
+@import '@nutui/nutui-react-taro/dist/packages/card/card.scss';
+@import '@nutui/nutui-react-taro/dist/packages/timedetail/timedetail.scss';
+@import '@nutui/nutui-react-taro/dist/packages/timeselect/timeselect.scss';
+@import '@nutui/nutui-react-taro/dist/packages/trendarrow/trendarrow.scss';
+@import '@nutui/nutui-react-taro/dist/packages/watermark/watermark.scss';
+@import '@nutui/nutui-react-taro/dist/packages/avatarcropper/avatarcropper.scss';
+
+
+// 修改主色
 
 body {
     margin: 0;
@@ -60,9 +169,9 @@ body {
 }
 
 .page-title {
-    font-size: 50px;
+    font-size: 20px;
     padding: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .page-desc {

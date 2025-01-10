@@ -1,15 +1,25 @@
 {
-  "miniprogramRoot": "./dist",
-  "projectname": "fullstack-taro-app-template",
-  "description": "This repository is a full-stack sample mini program based on Taro that creates a simple extended architecture.",
-  "appid": "touristappid",
-  "setting": {
-    "urlCheck": true,
-    "es6": false,
+	"miniprogramRoot": "dist/",
+    "projectname": "fullstack-taro-app-template",
+    "description": "This repository is a full-stack sample mini program based on Taro that creates a simple extended architecture.",
+	"appid": "touristappid",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
     "enhance": false,
     "compileHotReLoad": false,
-    "postcss": false,
-    "minified": false
-  },
-  "compileType": "miniprogram"
+		"postcss": false,
+		"preloadBackgroundData": false,
+		"minified": false,
+		"newFeature": true,
+		"autoAudits": false,
+		"coverView": true,
+		"showShadowRootInWxmlPanel": false,
+		"scopeDataCheck": false,
+		"useCompilerModule": false
+	},
+	"compileType": "miniprogram",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {}
 }

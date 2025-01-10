@@ -17,11 +17,13 @@ export default (state = initialState, action) => {
             }
         case REMOVE:
 
-            state.ids = state.ids.filter( item => item != action.id);
+            const _old = state.ids;
+            const _index = state.ids.findIndex((v) => v == action.id);
+            _old.splice(_index, 1)
 
             return {
                 ...state,
-                ids: state.ids
+                ids: _old
             }
         default:
             return state

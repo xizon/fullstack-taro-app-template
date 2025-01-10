@@ -8,6 +8,7 @@ export default defineAppConfig({
         'pages/fav/index',
         'pages/dashboard/index',
         'pages/upload/index',
+        'pages/official/index',
         'pages/canvas/index',
         'pages/webview/index'
 
@@ -50,11 +51,12 @@ export default defineAppConfig({
                 selectedIconPath: "./assets/images/icon3-active.png"
             },
             {
-                pagePath: "pages/canvas/index",
-                text: "Canvas",
+                pagePath: "pages/official/index",
+                text: "官方演示",
                 iconPath: "./assets/images/icon6.png",
                 selectedIconPath: "./assets/images/icon6-active.png"
             }
+
         ]
     }
 })

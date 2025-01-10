@@ -1,53 +1,30 @@
-import React, { Component, PropsWithChildren } from 'react';
-import Taro from '@tarojs/taro';
-import { Button } from '@tarojs/components';
+import React, { useState } from 'react'
+import Taro, { useReady } from '@tarojs/taro';
+import { View } from '@tarojs/components'
+import { Button } from '@nutui/nutui-react-taro'
 import apiUrls from '@/config/apiUrls';
 import cloudConfig from '@/config/cloudConfig';
 
 import CustomButton from '@/components/Buttons';
-import { AtModal } from "taro-ui";
-
-import './index.scss';
+import { Dialog } from '@nutui/nutui-react-taro';
 
 import imgAvatar from '@/assets/images/avatar.png';
 
+import './index.scss'
+function Index() {
 
-type PageState = {
-    userAuthInfo?: any | null;
-    logoutModalOpen?: boolean;
-};
+    const [logoutModalOpen, setLogoutModalOpen] = useState<boolean>(false);
+    const [userAuthInfo, setUserAuthInfo] = useState<any>(null);
 
-export default class Index extends Component<PropsWithChildren, PageState> {
+    const sysInfo: any = Taro.getSystemInfoSync();  // 获取调试环境的信息
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            userAuthInfo: null,
-            logoutModalOpen: false
-        }
-
-        this.getUserAuthInfo = this.getUserAuthInfo.bind(this);
-        this.databaseForUserInfo = this.databaseForUserInfo.bind(this);
-        this.getOpenID = this.getOpenID.bind(this);
-        this.logoutConfirm = this.logoutConfirm.bind(this);
-        this.logout = this.logout.bind(this);
+    const logoutConfirm = () => {
+        setLogoutModalOpen(true);
     }
 
-
-    sysInfo: any = Taro.getSystemInfoSync();  // 获取调试环境的信息
-
-
-    logoutConfirm() {
-        this.setState({
-            logoutModalOpen: true
-        });
-    }
-
-    logout() {
-        this.setState({
-            userAuthInfo: null,
-            logoutModalOpen: false
-        });
+    const logout = () => {
+        setLogoutModalOpen(false);
+        setUserAuthInfo(null);
 
         Taro.removeStorageSync('DATA_SESSION_LOGGED');
         Taro.removeStorageSync('DATA_SESSION_USERINFO');
@@ -56,9 +33,8 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         Taro.redirectTo({ url: "/pages/index/index" });
     }
 
-    getOpenID(userInfo: any = false, callback: any = false) {
+    const getOpenID = (userInfo: any = false, callback: any = false) => {
 
-        const self = this;
 
         //更新最新的用户数据
         if (userInfo !== false) {
@@ -81,7 +57,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
             console.log("Taro.login() ok");
 
             const _openid = 'openi-test-0007';
-    
+
             //
             Taro.setStorage({
                 key: 'DATA_SESSION_LOGGED',
@@ -117,14 +93,14 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                         path: cloudConfig.OPENID_REQUEST,
                         method: 'POST',
                         header: cloudConfig.callContainerHeader,
-                        data: {code: res.code},
+                        data: { code: res.code },
                     }).then(res => {
-            
+
                         if (res.statusCode !== 200) {
                             callback.call(null, false);
                             return;
                         }
-            
+
                         //保存openid
                         const _openid = res.data.data.openid;
                         Taro.setStorage({
@@ -133,8 +109,8 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                         });
 
                         callback.call(null, _openid);
-            
-            
+
+
                     }).catch(err => {
                         Taro.showLoading({ title: '后端服务重启中' });
                         console.log(err);
@@ -149,7 +125,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         });
     }
 
-    databaseForUserInfo(updateVal = 0, obj: any = false, openid: any = false, callback: any = false) {
+    const databaseForUserInfo = (updateVal = 0, obj: any = false, openid: any = false, callback: any = false) => {
 
         //!!!!!
         // 注意：只有使用修改头像，昵称等操作时，才将 updateVal 的值设为 1
@@ -230,9 +206,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
     }
 
 
-    getUserAuthInfo() {
-
-        const self = this;
+    const getUserAuthInfo = () => {
 
 
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
@@ -254,22 +228,20 @@ export default class Index extends Component<PropsWithChildren, PageState> {
             };
 
             // 保存 OPENID, 并比对数据库用户是否存在
-            self.getOpenID(_userInfo, function (id) {
+            getOpenID(_userInfo, function (id) {
 
-                self.databaseForUserInfo(0, _userInfo, id, function (response) {
+                databaseForUserInfo(0, _userInfo, id, function (response) {
 
                     console.log('getUserAuthInfo() response: ', response);
                     if (response !== false) {
 
-                        self.setState({
-                            userAuthInfo: {
-                                nickName: response.userinfo.nickname,
-                                gender: response.userinfo.gender,
-                                city: response.userinfo.city,
-                                province: response.userinfo.province,
-                                country: response.userinfo.country,
-                                avatarUrl: response.userinfo.avatar
-                            }
+                        setUserAuthInfo({
+                            nickName: response.userinfo.nickname,
+                            gender: response.userinfo.gender,
+                            city: response.userinfo.city,
+                            province: response.userinfo.province,
+                            country: response.userinfo.country,
+                            avatarUrl: response.userinfo.avatar
                         });
 
 
@@ -287,7 +259,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         // 注意：getUserProfile 只能由用户 TAP 手势调用
         Taro.getUserProfile({
             desc: '获取您的昵称和头像', // getUserProfile接口已经被收回，只返回灰色头像和固定名称
-            success: (res) => {
+            success: (res: any) => {
 
                 Taro.showToast({
                     title: '授权成功 :)',
@@ -299,23 +271,22 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                         const _userInfo = res.userInfo;
 
                         // 保存 OPENID, 并比对数据库用户是否存在
-                        self.getOpenID(_userInfo, function (id) {
+                        getOpenID(_userInfo, function (id) {
 
-                            self.databaseForUserInfo(0, _userInfo, id, function (response) {
+                            databaseForUserInfo(0, _userInfo, id, function (response) {
 
                                 console.log('getUserAuthInfo() response: ', response);
                                 if (response !== false) {
 
-                                    self.setState({
-                                        userAuthInfo: {
-                                            nickName: response.userinfo.nickname,
-                                            gender: response.userinfo.gender,
-                                            city: response.userinfo.city,
-                                            province: response.userinfo.province,
-                                            country: response.userinfo.country,
-                                            avatarUrl: response.userinfo.avatar
-                                        }
+                                    setUserAuthInfo({
+                                        nickName: response.userinfo.nickname,
+                                        gender: response.userinfo.gender,
+                                        city: response.userinfo.city,
+                                        province: response.userinfo.province,
+                                        country: response.userinfo.country,
+                                        avatarUrl: response.userinfo.avatar
                                     });
+
 
 
                                 }
@@ -343,19 +314,7 @@ export default class Index extends Component<PropsWithChildren, PageState> {
     }
 
 
-    // 组件初次加载和小程序页面切换时触发
-    // 用于 `componentWillMount()` 和 `componentDidShow()`
-    pageSwitchFun() {
-
-        //通常用来更新用户的其它信息，比如收藏的项目，用户的动态等等
-        console.log('pageSwitchFun()');
-
-    }
-
-    componentWillMount() {
-        this.pageSwitchFun();
-
-        const self = this;
+    useReady(() => {
 
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
          * # 使用H5测试  start   
@@ -373,21 +332,21 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 success: function (res) {
                     const _openid = res.data;
 
-                    self.databaseForUserInfo(0, false, _openid, function (response) {
+                    databaseForUserInfo(0, false, _openid, function (response) {
 
                         console.log('Taro.checkSession() response: ', response);
 
                         if (response !== false) {
-                            self.setState({
-                                userAuthInfo: {
-                                    nickName: response.userinfo.nickname,
-                                    gender: response.userinfo.gender,
-                                    city: response.userinfo.city,
-                                    province: response.userinfo.province,
-                                    country: response.userinfo.country,
-                                    avatarUrl: response.userinfo.avatar
-                                }
+
+                            setUserAuthInfo({
+                                nickName: response.userinfo.nickname,
+                                gender: response.userinfo.gender,
+                                city: response.userinfo.city,
+                                province: response.userinfo.province,
+                                country: response.userinfo.country,
+                                avatarUrl: response.userinfo.avatar
                             });
+
                         }
                     });
 
@@ -395,10 +354,8 @@ export default class Index extends Component<PropsWithChildren, PageState> {
                 },
                 fail: function () {
                     console.log('session_key已经过期或者从未登录，重新登录(需要用户重新点击授权获取资料)');
+                    setUserAuthInfo(null);
 
-                    self.setState({
-                        userAuthInfo: null
-                    });
 
                 }
             });
@@ -431,21 +388,20 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
                         const _openid = res.data;
 
-                        self.databaseForUserInfo(0, false, _openid, function (response) {
+                        databaseForUserInfo(0, false, _openid, function (response) {
 
                             console.log('Taro.checkSession() response: ', response);
 
                             if (response !== false) {
-                                self.setState({
-                                    userAuthInfo: {
-                                        nickName: response.userinfo.nickname,
-                                        gender: response.userinfo.gender,
-                                        city: response.userinfo.city,
-                                        province: response.userinfo.province,
-                                        country: response.userinfo.country,
-                                        avatarUrl: response.userinfo.avatar
-                                    }
+                                setUserAuthInfo({
+                                    nickName: response.userinfo.nickname,
+                                    gender: response.userinfo.gender,
+                                    city: response.userinfo.city,
+                                    province: response.userinfo.province,
+                                    country: response.userinfo.country,
+                                    avatarUrl: response.userinfo.avatar
                                 });
+
 
                             }
                         });
@@ -457,66 +413,59 @@ export default class Index extends Component<PropsWithChildren, PageState> {
             fail() {
 
                 console.log('session_key已经过期或者从未登录，重新登录(需要用户重新点击授权获取资料)');
-
-                self.setState({
-                    userAuthInfo: null
-                });
+                setUserAuthInfo(null);
 
             }
         });
 
+    });
 
-    }
+    return (
+        <View className="wrapper">
+            <Dialog
+                visible={logoutModalOpen ? true : false}
+                lockScroll={false}
+                title='退出'
+                cancelText='取消'
+                confirmText='确认'
+                onConfirm={logout}
+                onCancel={() => setLogoutModalOpen(false)}
+            >
 
-    componentDidMount() { }
-
-    componentWillUnmount() { }
-
-    componentDidShow() {
-        this.pageSwitchFun();
-    }
-
-    componentDidHide() { }
-
-    render() {
-
-        return (
-
-            <div className="wrapper">
-
-                <AtModal
-                    isOpened={this.state.logoutModalOpen ? true : false}
-                    title='退出'
-                    cancelText='取消'
-                    confirmText='确认'
-                    onClose={() => this.setState({logoutModalOpen: false})}
-                    onCancel={() => this.setState({logoutModalOpen: false})}
-                    onConfirm={this.logout}
-                    content='退出后将删除用户授权信息，下次重新授权后可恢复收藏条目'
-                />
-
-                <div className="page-title">我的 {this.state.userAuthInfo ? <small style={{ color: 'gray', fontSize: '.7em' }} onClick={this.logoutConfirm}>退出</small> : null}</div>
-
-                { !this.state.userAuthInfo ? <div className="page-desc"><div className="at-article__info">登录已过期或者未登录过应用，需要重新授权！</div></div> : null}
-
-                <div className="dashboard">
-
-                    <div><CustomButton className='btn-max-w' plain type='primary' btnName='上传图片' href={`/pages/upload/index`} /></div>
-                    <div>
-
-                        {this.state.userAuthInfo ? <div className="userarea">
-                            <img className="userarea__avatar" src={this.state.userAuthInfo.avatarUrl} />
-                            <p className="userarea__name">{this.state.userAuthInfo.nickName}</p>
-                        </div> : <div>
-                            <Button className='btn-max-w app-btn-s1' type='primary' onClick={this.getUserAuthInfo}>授权获取用户头像和姓名</Button>
-                        </div>}
-
-                    </div>
+                退出后将删除用户授权信息，下次重新授权后可恢复收藏条目
+            </Dialog>
 
 
-                </div>
+            <View className="page-title">我的 {userAuthInfo ? <small style={{ color: 'gray', fontSize: '.7em' }} onClick={logoutConfirm}>退出</small> : null}</View>
 
-            </div>
-        )
-    }
+            {!userAuthInfo ? <View className="page-desc"><View className="at-article__info">登录已过期或者未登录过应用，需要重新授权！</View></View> : null}
+
+            <View className="dashboard">
+
+                <View><CustomButton block type='success' fill="outline" style={{ marginBottom: 10 }}  btnName='上传图片' href={`/pages/upload/index`} /></View>
+           
+                <View>
+
+                    {userAuthInfo ? <View className="userarea">
+                        <img className="userarea__avatar" src={userAuthInfo.avatarUrl} />
+                        <p className="userarea__name">{userAuthInfo.nickName}</p>
+                    </View> : <View>
+                        <Button block type='success' onClick={getUserAuthInfo}>授权获取用户头像和姓名</Button>
+                    </View>}
+
+                </View>
+
+                
+
+                
+
+
+            </View>
+
+        </View>
+    )
 }
+
+export default Index
+
+

@@ -1,64 +1,52 @@
-import React, { Component, PropsWithChildren } from 'react';
+import React, { useState, useEffect } from 'react'
 import Taro from '@tarojs/taro';
-import { ScrollView, Image } from '@tarojs/components';
+import { View, ScrollView } from '@tarojs/components';
 import apiUrls from '@/config/apiUrls';
 import cloudConfig from '@/config/cloudConfig';
+import { Image } from '@nutui/nutui-react-taro'
 
-import './index.scss';
+import './index.scss'
+function Index() {
 
-type PageState = {
-    loading?: boolean;
-    list?: any[] | null;
-    page: number;
-};
+    const [loading, setLoading] = useState<boolean>(false);
+    const [list, setList] = useState<any[]>([]);
+    const [page, setPage] = useState<number>(1);
 
-export default class Index extends Component<PropsWithChildren, PageState> {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            loading: true,
-            list: [],
-            page: 1
-        }
-    }
-
-    linkTo = (e, url) => {
+    const linkTo = (e, url) => {
         e.preventDefault();
         Taro.navigateTo({ url: url });
-    }
+    };
 
-
-    displayData(res, nextpage) {
+    const displayData = (res, nextpage) => {
         console.log('php data: ', res);
 
         Taro.hideLoading();
 
         if (res.statusCode !== 200) {
-            this.setState({
-                loading: false,
-                list: []
-            });
+            setLoading(false);
+            setList([]);
+        
             return;
         }
 
-        if ( nextpage > res.data.total_pages ) return;
-        if ( res.data.error ) return;
-        
+        if (nextpage > res.data.total_pages) return;
+        if (res.data.error) return;
+
 
 
         //分页代码
-        this.setState((prevState: any) => ({
-            list: prevState.list.concat(res.data.data),
-            page: nextpage,
-            loading: false
-        }));
+        setLoading(false);
+        setList((prevState: any[]) => {
+            const oldData = prevState;
+            return oldData.concat(res.data.data);
+        });
+        setPage(nextpage);
 
-    }
+
+    };
 
     // getList = () => { ... }
-    getList(nextpage = 1) {
-        const self = this;
+    const getList = (nextpage = 1) => {
         Taro.showLoading({ title: '加载中' })
 
 
@@ -71,29 +59,29 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         if (process.env.NODE_ENV === 'development') {
 
             Taro.request({
-                url: apiUrls.RECEIVE_LIST_PAGINATION.replace('{page}', `${nextpage}`), 
+                url: apiUrls.RECEIVE_LIST_PAGINATION.replace('{page}', `${nextpage}`),
                 method: 'GET',
                 success: function (res: any) {
-                    self.displayData(res, nextpage);
+                    displayData(res, nextpage);
                 }
 
             });
 
             return;
-         }
+        }
         /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
          * # 使用H5测试  end   
         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 
 
         Taro.cloud.callContainer({
-            path: cloudConfig.RECEIVE_LIST_PAGINATION.replace('{page}', `${nextpage}`), 
+            path: cloudConfig.RECEIVE_LIST_PAGINATION.replace('{page}', `${nextpage}`),
             method: 'GET',
             header: cloudConfig.callContainerHeader,
             data: ""
         }).then(res => {
-            self.displayData(res, nextpage);
-    
+            displayData(res, nextpage);
+
 
         }).catch(err => {
             Taro.showLoading({ title: '后端服务重启中' });
@@ -101,84 +89,55 @@ export default class Index extends Component<PropsWithChildren, PageState> {
         });
 
 
-    }
+    };
 
 
-    onScroll(e) {
+    const onScroll = (e) => {
         //console.log(e.detail);   // {scrollLeft: 0, scrollTop: 66, scrollHeight: 11544, scrollWidth: 375}, ...
-    }
+    };
 
 
-    componentWillMount() {
-
-
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
-         * # 使用H5测试  start   
-         * 注意：
-         * 1) 请修改 cloud-hosting/miniprogram-deploy-package/includes/conn.php 数据库配置
-         * 2) 请检查请求的测试地址 (外网URL或者localhost是否通畅)
-        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
-      
-        if (process.env.NODE_ENV === 'development') return;
-
-        /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
-         * # 使用H5测试  end   
-        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
-
-
-
-        // 下面的参数配置请参考小程序云部署后的参考代码
-        // 注意：不能使用测试的appid, 需要使用正式申请的小程序ID才能正确请求云部署的文件
-        Taro.cloud.init({
-            env: cloudConfig.env
-        });
-
-
-    }
-
-    componentDidMount() {
-
+    useEffect(() => {
         //初始化远程数据
-        this.getList(1);
-    }
+        getList(1);
+    }, []);
 
-    componentWillUnmount() { }
+    return (
+        <View className="wrapper wrapper--hasScrollView">
 
-    componentDidShow() { }
+            <View className="page-title">文章列表</View>
 
-    componentDidHide() { }
+            <ScrollView className="scrollview"
+                scrollY
+                scrollWithAnimation
+                scrollTop={0}
+                lowerThreshold={20}
+                upperThreshold={20}
+                onScrollToLower={() => {
+                     // 滚动到底部触发，箭头函数写法 `onScrollToLower={getList(page+1)}`
+                    getList(page + 1);
+                }}
+                onScroll={onScroll}
+            >
 
-    render() {
-        return (
-            <div className="wrapper wrapper--hasScrollView">
+                {
+                    loading ? <View>Loading...</View> : list ? list.map((post, key) => {
+                        return (
+                            <View className="item" key={key}>
+                                <p>{key + 1}. {post.title}</p>
+                                <View className="item-img"><Image mode="widthFix" src={post.avatar} /></View>
+                            </View>
 
-                <div className="page-title">文章列表</div>
-
-                <ScrollView className="scrollview"
-                    scrollY
-                    scrollWithAnimation
-                    scrollTop={0}
-                    lowerThreshold={20}
-                    upperThreshold={20}
-                    onScrollToLower={this.getList.bind(this, this.state.page+1)} // 滚动到底部触发，箭头函数写法 `onScrollToLower={this.getList(this.state.page+1)}`
-                    onScroll={this.onScroll}
-                >
-
-                    {
-                        this.state.loading ? <div>Loading...</div> : this.state.list ? this.state.list.map((post, key) => {
-                            return (
-                                <div className="item" key={key}>
-                                    <p>{key+1}. {post.title}</p>
-                                    <div className="item-img"><Image mode="widthFix" src={post.avatar} style='width: 100%;'/></div>
-                                </div>
-                                
-                            )
-                        }) : null
-                    }
-                </ScrollView>
+                        )
+                    }) : null
+                }
+            </ScrollView>
 
 
-            </div>
-        )
-    }
+        </View>
+    )
 }
+
+export default Index
+
+

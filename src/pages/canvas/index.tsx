@@ -1,41 +1,19 @@
-import React, { Component, PropsWithChildren } from 'react';
+import React, { useState, useEffect, useRef } from 'react'
 import Taro from '@tarojs/taro';
-import { Canvas } from '@tarojs/components';
+import { View, Canvas } from '@tarojs/components'
 
-import './index.scss';
-
-type PageState = {
-    pxWidth?: any;
-    pxHeight?: any;
-};
+import './index.scss'
 
 
-export default class Index extends Component<PropsWithChildren, PageState> {
-    canvasId: React.RefObject<unknown>;
-    id: string;
-    sysInfo: any;
+function Index() {
 
-    constructor(props) {
-        super(props);
-
-        this.canvasId = React.createRef();
-        this.id = 'canvas-id-001';
-
-        this.state = {
-            pxWidth: window.innerWidth - 40,
-            pxHeight: window.innerHeight
-        }
-
-        this.initCanvas = this.initCanvas.bind(this);
-
-    }
+    const id = 'canvas-id-001';
+    const [winSize, setWinSize] = useState<number[]>([0,0]);
 
     // 注意<Canvas> 需要 `canvasId` 属性
-    // 且是在 onReady() 方法中调用
     // 小程序是没有document，也是取不到 getContext属性的
-    initCanvas() {
-
-        const ctx: any = Taro.createCanvasContext(this.id);  
+    const initCanvas = () => {
+        const ctx: any = Taro.createCanvasContext(id);  
 
         ctx.beginPath();
         ctx.moveTo(25, 25);
@@ -48,42 +26,31 @@ export default class Index extends Component<PropsWithChildren, PageState> {
 
     }
 
+    useEffect(() => {
 
-    onReady() {
-        this.initCanvas();
-    }
+        // 需要使用 setTimeout 才能避免canvas对象为null的错误
+        setTimeout(() => {
+            initCanvas();
+        }, 500);
 
-    componentWillMount() {
+        setWinSize([ window.innerWidth -40, window.innerHeight - 120]);
+    }, []);
 
-    }
+    return (
+            <View className="wrapper">
 
-    componentDidMount() {
-        
-    }
-    
-
-    componentWillUnmount() { }
-
-    componentDidShow() { }
-
-    componentDidHide() { }
-
-    render() {
-        return (
-            <div className="wrapper">
-
-                <div className="page-title">Canvas</div>
+                <View className="page-title">画布</View>
 
                 <Canvas 
-                    ref={this.canvasId} 
-                    canvasId={this.id} 
+                    canvasId={id} 
                     className="canvas-obj" 
-                    width={this.state.pxWidth}
-                    height={this.state.pxHeight}            
-                    style={{width: this.state.pxWidth + 'px', height: this.state.pxHeight + 'px'}} >
+                    width={`${winSize[0]}px`}
+                    height={`${winSize[1]}px`}    
+                    style={{width: winSize[0] + 'px', height: winSize[1] + 'px'}} >
                 </Canvas>
         
-            </div>
-        )
-    }
+            </View>
+    )
 }
+
+export default Index
